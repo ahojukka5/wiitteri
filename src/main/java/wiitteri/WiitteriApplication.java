@@ -1,13 +1,13 @@
-package projekti;
+package wiitteri;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class MyApplication {
+public class WiitteriApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(MyApplication.class);
+        SpringApplication.run(WiitteriApplication.class);
     }
 
 }

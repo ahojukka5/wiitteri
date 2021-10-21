@@ -5,8 +5,8 @@
                              http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>tkt</groupId>
-    <artifactId>wepa_Projekti</artifactId>
-    <name>wepa_Projekti</name>
+    <artifactId>wiitteri</artifactId>
+    <name>wiitteri</name>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
     

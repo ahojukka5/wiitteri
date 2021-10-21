@@ -1,8 +1,8 @@
-package projekti;
+package wiitteri;
 
 import org.junit.Test;
 
-public class ProjektiTest {
+public class WiitteriTest {
 
     @Test
     public void noTests() {
