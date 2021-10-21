@@ -1,0 +1,22 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Wiitteri</title>
+</head>
+
+<body>
+
+    <h1>Sign up to Wiitteri</h1>
+
+    <form th:action="@{/signup}" method="POST">
+        <input type="text" name="username" />
+        <input type="password" name="password" />
+        <input type="text" name="handle" />
+        <input type="submit" />
+    </form>
+
+</body>
+
+</html>
