@@ -1,4 +1,4 @@
-name: Deploy
+name: CI/CD
 
 on:
   push:
@@ -6,7 +6,27 @@ on:
       - master
 
 jobs:
-  build:
+  test:
+    name: Unit tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Set up JDK
+        uses: actions/setup-java@v1
+        with:
+          java-version: "11"
+      - name: Cache Maven packages
+        uses: actions/cache@v1
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+      - name: Run tests
+        run: mvn -B test
+
+  deploy:
+    name: Deploy to Heroku
+    needs: test
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
