@@ -31,4 +31,8 @@ public class LoginService {
     public void logout() {
         session.removeAttribute("username");
     }
+
+    public boolean isLogged() {
+        return session.getAttribute("username") != null;
+    }
 }
