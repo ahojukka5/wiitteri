@@ -14,7 +14,7 @@ public class LoginController {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
-    private AccountRepository accountRepository;
+    private LoginService loginService;
 
     @GetMapping("/login")
     public String login_get() {
@@ -25,12 +25,7 @@ public class LoginController {
     public String login_post(@RequestParam String username, @RequestParam String password) {
         logger.debug("username: " + username);
         logger.debug("password length: " + password.length());
-        Account account = accountRepository.findByUsername(username);
-        if (account != null) {
-            logger.debug("Account with username " + username + " found.");
-        } else {
-            logger.debug("Account with username " + username + " not found.");
-        }
+        loginService.login(username, password);
         return "redirect:/";
     }
 }
