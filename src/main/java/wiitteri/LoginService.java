@@ -32,7 +32,12 @@ public class LoginService {
         session.removeAttribute("username");
     }
 
-    public boolean isLogged() {
-        return session.getAttribute("username") != null;
+    public String getUsername() {
+        return (String) session.getAttribute("username");
     }
+
+    public boolean isLogged() {
+        return getUsername() != null;
+    }
+
 }
