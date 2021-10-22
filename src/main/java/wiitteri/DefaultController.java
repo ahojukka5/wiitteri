@@ -17,7 +17,7 @@ public class DefaultController {
     public String index(Model model) {
         String username = (String) session.getAttribute("username");
         if (username == null) {
-            username = "stranger";
+            return "redirect:/login";
         }
         model.addAttribute("username", username);
         return "index";
