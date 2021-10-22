@@ -10,6 +10,9 @@
 
     <h1 th:text="${'Hello ' + username}">Hello world</h1>
 
+    <form th:action="@{/logout}" method="GET">
+        <button type="submit">Logout</button>
+    </form>
 
 </body>
 

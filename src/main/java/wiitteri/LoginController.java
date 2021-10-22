@@ -21,6 +21,13 @@ public class LoginController {
         return "login";
     }
 
+    @GetMapping("/logout")
+    public String logout() {
+        logger.debug("logging user out");
+        loginService.logout();
+        return "redirect:/";
+    }
+
     @PostMapping("/login")
     public String login_post(@RequestParam String username, @RequestParam String password) {
         logger.debug("username: " + username);

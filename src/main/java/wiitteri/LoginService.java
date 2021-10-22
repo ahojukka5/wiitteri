@@ -28,4 +28,7 @@ public class LoginService {
         }
     }
 
+    public void logout() {
+        session.removeAttribute("username");
+    }
 }
