@@ -1,5 +1,7 @@
 package wiitteri;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -9,6 +11,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class AccountService {
+
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     private HttpSession session;
@@ -21,8 +25,12 @@ public class AccountService {
         return accountRepository.findByUsername(loggedUsername);
     }
 
+    public void follow(String otherUsername) {
+        Account loggedUser = getLoggedUser();
         Account otherUser = accountRepository.findByUsername(otherUsername);
-        loggedUser.follow(otherUser);
+        logger.debug(loggedUser.getUsername() + " is following " + otherUser.getUsername());
+        loggedUser.getFollowedUsers().add(otherUser);
+        accountRepository.save(loggedUser);
     }
 
     public void createAccount(String username, String password, String handle) {
