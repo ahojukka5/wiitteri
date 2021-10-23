@@ -16,9 +16,11 @@ public class AccountService {
     @Autowired
     private AccountRepository accountRepository;
 
-    public void follow(String otherUsername) {
+    public Account getLoggedUser() {
         String loggedUsername = (String) session.getAttribute("username");
-        Account loggedUser = accountRepository.findByUsername(loggedUsername);
+        return accountRepository.findByUsername(loggedUsername);
+    }
+
         Account otherUser = accountRepository.findByUsername(otherUsername);
         loggedUser.follow(otherUser);
     }
