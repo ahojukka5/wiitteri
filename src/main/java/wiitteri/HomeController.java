@@ -23,12 +23,9 @@ public class HomeController {
 
     @GetMapping("/home")
     public String home(Model model) {
-        String username = loginService.getUsername();
-        List<Account> followedUsers = accountService.getFollowedUsers();
-        logger.debug("logged in user: " + username);
-        logger.debug("user is following number of other users: " + followedUsers.size());
-        model.addAttribute("username", username);
-        model.addAttribute("followedUsers", followedUsers);
+        model.addAttribute("username", loginService.getUsername());
+        model.addAttribute("followedUsers", accountService.getFollowedUsers());
+        model.addAttribute("followers", accountService.getFollowers());
         return "home";
     }
 
