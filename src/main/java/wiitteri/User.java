@@ -16,19 +16,19 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class Account extends AbstractPersistable<Long> {
+public class User extends AbstractPersistable<Long> {
 
     private String username;
     private String passwordHash;
     private String handle;
 
     @OneToMany
-    private List<Account> followedUsers;
+    private List<User> followedUsers;
 
     @OneToMany
-    private List<Account> followers;
+    private List<User> followers;
 
-    public Account(String username2, String password, String handle2) {
+    public User(String username2, String password, String handle2) {
         this.username = username2;
         this.passwordHash = "";
         this.handle = handle2;

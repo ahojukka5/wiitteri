@@ -19,7 +19,7 @@ public class HomeController {
     private LoginService loginService;
 
     @Autowired
-    private AccountService accountService;
+    private UserService userService;
 
     @GetMapping("/home")
     public String home(Model model) {
@@ -27,8 +27,8 @@ public class HomeController {
             return "redirect:/login";
         }
         model.addAttribute("username", loginService.getUsername());
-        model.addAttribute("followedUsers", accountService.getFollowedUsers());
-        model.addAttribute("followers", accountService.getFollowers());
+        model.addAttribute("followedUsers", userService.getFollowedUsers());
+        model.addAttribute("followers", userService.getFollowers());
         return "home";
     }
 

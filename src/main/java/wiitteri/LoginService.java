@@ -16,10 +16,10 @@ public class LoginService {
     private HttpSession session;
 
     @Autowired
-    private AccountRepository accountRepository;
+    private UserRepository userRepository;
 
     public void login(String username, String password) {
-        Account account = accountRepository.findByUsername(username);
+        User account = userRepository.findByUsername(username);
         if (account != null) {
             logger.debug("Account with username " + username + " found.");
             session.setAttribute("username", username);

@@ -14,7 +14,7 @@ public class ProfileController {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
-    AccountService accountService;
+    UserService userService;
 
     @GetMapping("/{username}")
     public String profile(Model model, @PathVariable String username) {
@@ -25,7 +25,7 @@ public class ProfileController {
     @GetMapping("/{username}/follow")
     public String follow(Model model, @PathVariable String username) {
         logger.debug("Following user " + username);
-        accountService.follow(username);
+        userService.follow(username);
         model.addAttribute("username", username);
         return "redirect:/" + username;
     }

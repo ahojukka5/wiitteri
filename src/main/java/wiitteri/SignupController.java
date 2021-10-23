@@ -14,7 +14,7 @@ public class SignupController {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
-    private AccountService accountService;
+    private UserService userService;
 
     @GetMapping("/signup")
     public String signup() {
@@ -26,7 +26,7 @@ public class SignupController {
         logger.debug("username: " + username);
         logger.debug("password length: " + password.length());
         logger.debug("handle: " + handle);
-        accountService.createAccount(username, password, handle);
+        userService.createAccount(username, password, handle);
         return "redirect:/home";
     }
 }

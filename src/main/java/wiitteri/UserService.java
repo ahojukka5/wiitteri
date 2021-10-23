@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AccountService {
+public class UserService {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -18,34 +18,34 @@ public class AccountService {
     private HttpSession session;
 
     @Autowired
-    private AccountRepository accountRepository;
+    private UserRepository userRepository;
 
-    public Account getLoggedUser() {
+    public User getLoggedUser() {
         String loggedUsername = (String) session.getAttribute("username");
-        return accountRepository.findByUsername(loggedUsername);
+        return userRepository.findByUsername(loggedUsername);
     }
 
     public void follow(String otherUsername) {
-        Account loggedUser = getLoggedUser();
-        Account otherUser = accountRepository.findByUsername(otherUsername);
+        User loggedUser = getLoggedUser();
+        User otherUser = userRepository.findByUsername(otherUsername);
         logger.debug(loggedUser.getUsername() + " is following " + otherUser.getUsername());
         loggedUser.getFollowedUsers().add(otherUser);
         otherUser.getFollowers().add(loggedUser);
-        accountRepository.save(loggedUser);
+        userRepository.save(loggedUser);
     }
 
     public void createAccount(String username, String password, String handle) {
         // TODO: hashing password here?
         String passwordHash = password;
-        Account account = new Account(username, passwordHash, handle);
-        accountRepository.save(account);
+        User user = new User(username, passwordHash, handle);
+        userRepository.save(user);
     }
 
-    public List<Account> getFollowedUsers() {
+    public List<User> getFollowedUsers() {
         return getLoggedUser().getFollowedUsers();
     }
 
-    public List<Account> getFollowers() {
+    public List<User> getFollowers() {
         return getLoggedUser().getFollowers();
     }
 
