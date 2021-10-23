@@ -9,19 +9,19 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-public class SignupController {
+public class RegisterController {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     private UserService userService;
 
-    @GetMapping("/signup")
+    @GetMapping("/register")
     public String signup() {
-        return "signup";
+        return "register";
     }
 
-    @PostMapping("/signup")
+    @PostMapping("/register")
     public String post(@RequestParam String username, @RequestParam String password, @RequestParam String handle) {
         logger.debug("username: " + username);
         logger.debug("password length: " + password.length());
