@@ -30,6 +30,7 @@ public class AccountService {
         Account otherUser = accountRepository.findByUsername(otherUsername);
         logger.debug(loggedUser.getUsername() + " is following " + otherUser.getUsername());
         loggedUser.getFollowedUsers().add(otherUser);
+        otherUser.getFollowers().add(loggedUser);
         accountRepository.save(loggedUser);
     }
 
