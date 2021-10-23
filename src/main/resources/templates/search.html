@@ -10,6 +10,11 @@
 
     <h1 th:text="${'Matches for search string ' + searchString}">Hello world</h1>
 
+    <ul>
+        <li th:each="user: ${users}">
+            <span th:text="${user.getUsername()}">user</span>
+        </li>
+    </ul>
 </body>
 
 </html>
