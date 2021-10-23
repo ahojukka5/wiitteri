@@ -25,10 +25,14 @@ public class Account extends AbstractPersistable<Long> {
     @OneToMany
     private List<Account> followedUsers;
 
+    @OneToMany
+    private List<Account> followers;
+
     public Account(String username2, String password, String handle2) {
         this.username = username2;
         this.passwordHash = "";
         this.handle = handle2;
         this.followedUsers = new ArrayList<>();
+        this.followers = new ArrayList<>();
     }
 }
