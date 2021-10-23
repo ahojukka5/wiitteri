@@ -8,8 +8,9 @@
 
 <body>
 
-    <h1 th:text="${'Hello ' + username}">Hello world</h1>
+    <h1 th:text="${'User ' + username}">username</h1>
 
+    <a th:href="@{/{handle}/follow(handle=${username})}">Follow user</a>
 </body>
 
 </html>
