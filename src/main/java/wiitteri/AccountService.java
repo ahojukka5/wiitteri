@@ -45,4 +45,8 @@ public class AccountService {
         return getLoggedUser().getFollowedUsers();
     }
 
+    public List<Account> getFollowers() {
+        return getLoggedUser().getFollowers();
+    }
+
 }
