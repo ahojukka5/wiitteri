@@ -23,6 +23,9 @@ public class HomeController {
 
     @GetMapping("/home")
     public String home(Model model) {
+        if (!loginService.isLogged()) {
+            return "redirect:/login";
+        }
         model.addAttribute("username", loginService.getUsername());
         model.addAttribute("followedUsers", accountService.getFollowedUsers());
         model.addAttribute("followers", accountService.getFollowers());
