@@ -2,6 +2,7 @@ package wiitteri;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpSession;
 
@@ -33,11 +34,8 @@ public class UserService {
         User loggedUser = getLoggedUser();
         User otherUser = userRepository.findByUsername(otherUsername);
         logger.debug(loggedUser.getUsername() + " is following " + otherUser.getUsername());
-        // loggedUser.getFollowing().add(otherUser);
-        // otherUser.getFollowers().add(loggedUser);
-        // userRepository.save(loggedUser);
-        Connection followers = new Connection(loggedUser, otherUser);
-        connectionRepository.save(followers);
+        Connection connection = new Connection(loggedUser, otherUser);
+        connectionRepository.save(connection);
     }
 
     public void createAccount(String username, String password, String handle) {
@@ -48,11 +46,24 @@ public class UserService {
     }
 
     public List<Connection> getFollowing() {
-        return getLoggedUser().getFollowing();
+        return getLoggedUser().getFollowing().stream().filter(Connection::isActive).collect(Collectors.toList());
     }
 
     public List<Connection> getFollowers() {
-        return getLoggedUser().getFollowers();
+        return getLoggedUser().getFollowers().stream().filter(Connection::isActive).collect(Collectors.toList());
+    }
+
+    public void block(String username) {
+        User loggedUser = getLoggedUser();
+        User otherUser = userRepository.findByUsername(username);
+        Connection connection = connectionRepository.findByFromAndTo(otherUser, loggedUser);
+        if (connection == null) {
+            String me = loggedUser.getHandle();
+            logger.error("Connection between " + username + " and " + me + " not found!");
+            return;
+        }
+        connection.setActive(false);
+        connectionRepository.save(connection);
     }
 
 }
