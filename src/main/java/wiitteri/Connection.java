@@ -27,10 +27,12 @@ public class Connection extends AbstractPersistable<Long> {
     private User to;
 
     private LocalDateTime created;
+    private boolean active;
 
     public Connection(User from, User to) {
         this.from = from;
         this.to = to;
         this.created = LocalDateTime.now();
+        this.active = true;
     }
 }
