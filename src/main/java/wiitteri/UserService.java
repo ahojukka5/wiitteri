@@ -22,7 +22,7 @@ public class UserService {
     private UserRepository userRepository;
 
     @Autowired
-    private FollowersRepository followersRepository;
+    private ConnectionRepository connectionRepository;
 
     public User getLoggedUser() {
         String loggedUsername = (String) session.getAttribute("username");
@@ -36,8 +36,8 @@ public class UserService {
         // loggedUser.getFollowing().add(otherUser);
         // otherUser.getFollowers().add(loggedUser);
         // userRepository.save(loggedUser);
-        Followers followers = new Followers(loggedUser, otherUser);
-        followersRepository.save(followers);
+        Connection followers = new Connection(loggedUser, otherUser);
+        connectionRepository.save(followers);
     }
 
     public void createAccount(String username, String password, String handle) {
@@ -47,20 +47,12 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public List<User> getFollowing() {
-        List<User> following = new ArrayList<>();
-        for (Followers f : getLoggedUser().getFollowing()) {
-            following.add(f.getTo());
-        }
-        return following;
+    public List<Connection> getFollowing() {
+        return getLoggedUser().getFollowing();
     }
 
-    public List<User> getFollowers() {
-        List<User> followers = new ArrayList<>();
-        for (Followers f : getLoggedUser().getFollowers()) {
-            followers.add(f.getFrom());
-        }
-        return followers;
+    public List<Connection> getFollowers() {
+        return getLoggedUser().getFollowers();
     }
 
 }

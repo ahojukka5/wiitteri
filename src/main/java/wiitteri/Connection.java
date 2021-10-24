@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class Followers extends AbstractPersistable<Long> {
+public class Connection extends AbstractPersistable<Long> {
 
     @ManyToOne
     @JoinColumn(name = "from_user_fk")
@@ -26,5 +26,11 @@ public class Followers extends AbstractPersistable<Long> {
     @JoinColumn(name = "to_user_fk")
     private User to;
 
-    // private LocalDateTime created;
+    private LocalDateTime created;
+
+    public Connection(User from, User to) {
+        this.from = from;
+        this.to = to;
+        this.created = LocalDateTime.now();
+    }
 }

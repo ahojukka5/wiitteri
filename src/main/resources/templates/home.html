@@ -12,18 +12,22 @@
 
     <p>You are following:</p>
     <ul>
-        <li th:each="user: ${following}">
-            <a th:href="@{/{handle}(handle=${user.getHandle()})}">
-                <span th:text="${user.getUsername()}">user</span>
+        <li th:each="f: ${following}">
+            <a th:href="@{/{handle}(handle=${f.getTo().getHandle()})}">
+                <span th:text="${f.getTo().getUsername()}">username</span>
+                since
+                <span th:text="${f.getCreated()}">created</span>
             </a>
         </li>
     </ul>
 
     <p>You have followers:</p>
     <ul>
-        <li th:each="user: ${followers}">
-            <a th:href="@{/{handle}(handle=${user.getHandle()})}">
-                <span th:text="${user.getUsername()}">user</span>
+        <li th:each="f: ${followers}">
+            <a th:href="@{/{handle}(handle=${f.getFrom().getHandle()})}">
+                <span th:text="${f.getFrom().getUsername()}">username</span>
+                since
+                <span th:text="${f.getCreated()}">created</span>
             </a>
         </li>
     </ul>

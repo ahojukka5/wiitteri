@@ -1,8 +1,5 @@
 package wiitteri;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,10 +23,6 @@ public class HomeController {
         if (!loginService.isLogged()) {
             return "redirect:/login";
         }
-        logger.debug(
-                "User " + loginService.getUsername() + " has " + userService.getFollowers().size() + " followers.");
-        logger.debug("User " + loginService.getUsername() + " is following " + userService.getFollowing().size()
-                + " other users.");
         model.addAttribute("username", loginService.getUsername());
         model.addAttribute("following", userService.getFollowing());
         model.addAttribute("followers", userService.getFollowers());
