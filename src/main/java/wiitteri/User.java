@@ -22,17 +22,17 @@ public class User extends AbstractPersistable<Long> {
     private String passwordHash;
     private String handle;
 
-    @OneToMany
-    private List<User> followedUsers;
+    @OneToMany(mappedBy = "to")
+    private List<Followers> followers;
 
-    @OneToMany
-    private List<User> followers;
+    @OneToMany(mappedBy = "from")
+    private List<Followers> following;
 
     public User(String username2, String password, String handle2) {
         this.username = username2;
         this.passwordHash = "";
         this.handle = handle2;
-        this.followedUsers = new ArrayList<>();
         this.followers = new ArrayList<>();
+        this.following = new ArrayList<>();
     }
 }

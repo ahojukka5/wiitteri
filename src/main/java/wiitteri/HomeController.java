@@ -26,8 +26,12 @@ public class HomeController {
         if (!loginService.isLogged()) {
             return "redirect:/login";
         }
+        logger.debug(
+                "User " + loginService.getUsername() + " has " + userService.getFollowers().size() + " followers.");
+        logger.debug("User " + loginService.getUsername() + " is following " + userService.getFollowing().size()
+                + " other users.");
         model.addAttribute("username", loginService.getUsername());
-        model.addAttribute("followedUsers", userService.getFollowedUsers());
+        model.addAttribute("following", userService.getFollowing());
         model.addAttribute("followers", userService.getFollowers());
         return "home";
     }

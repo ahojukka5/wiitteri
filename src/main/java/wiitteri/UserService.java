@@ -1,5 +1,6 @@
 package wiitteri;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -20,6 +21,9 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private FollowersRepository followersRepository;
+
     public User getLoggedUser() {
         String loggedUsername = (String) session.getAttribute("username");
         return userRepository.findByUsername(loggedUsername);
@@ -29,9 +33,11 @@ public class UserService {
         User loggedUser = getLoggedUser();
         User otherUser = userRepository.findByUsername(otherUsername);
         logger.debug(loggedUser.getUsername() + " is following " + otherUser.getUsername());
-        loggedUser.getFollowedUsers().add(otherUser);
-        otherUser.getFollowers().add(loggedUser);
-        userRepository.save(loggedUser);
+        // loggedUser.getFollowing().add(otherUser);
+        // otherUser.getFollowers().add(loggedUser);
+        // userRepository.save(loggedUser);
+        Followers followers = new Followers(loggedUser, otherUser);
+        followersRepository.save(followers);
     }
 
     public void createAccount(String username, String password, String handle) {
@@ -41,12 +47,20 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public List<User> getFollowedUsers() {
-        return getLoggedUser().getFollowedUsers();
+    public List<User> getFollowing() {
+        List<User> following = new ArrayList<>();
+        for (Followers f : getLoggedUser().getFollowing()) {
+            following.add(f.getTo());
+        }
+        return following;
     }
 
     public List<User> getFollowers() {
-        return getLoggedUser().getFollowers();
+        List<User> followers = new ArrayList<>();
+        for (Followers f : getLoggedUser().getFollowers()) {
+            followers.add(f.getFrom());
+        }
+        return followers;
     }
 
 }
