@@ -26,8 +26,11 @@
         <li th:each="f: ${followers}">
             <a th:href="@{/{handle}(handle=${f.getFrom().getHandle()})}">
                 <span th:text="${f.getFrom().getUsername()}">username</span>
-                since
-                <span th:text="${f.getCreated()}">created</span>
+            </a>
+            since
+            <span th:text="${f.getCreated()}">created</span>
+            <a th:href="@{/{handle}/block(handle=${f.getFrom().getHandle()})}">
+                block user
             </a>
         </li>
     </ul>
