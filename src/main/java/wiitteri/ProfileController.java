@@ -29,4 +29,11 @@ public class ProfileController {
         model.addAttribute("username", username);
         return "redirect:/" + username;
     }
+
+    @GetMapping("/{username}/block")
+    public String block(Model model, @PathVariable String username) {
+        logger.debug("Blocking user " + username);
+        userService.block(username);
+        return "redirect:/home";
+    }
 }
