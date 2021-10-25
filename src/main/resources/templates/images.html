@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head lang="en">
+    <meta charset="UTF-8" />
+    <title>Wiitteri</title>
+</head>
+
+<body>
+
+    <h2>Images of user <span th:text="${username}"></span></h2>
+
+    <div th:each="image: ${images}">
+        <div th:text="${image.description}"></div>
+        <div th:text="${image.id}"></div>
+        <img th:src="@{/images/{id}(id=${image.id})}" />
+    </div>
+
+    <form method="POST" th:action="@{/{handle}/images(handle=${username})}" enctype="multipart/form-data">
+        <input type="file" name="file" id="file" />
+        <label for="description">Description:</label>
+        <input type="text" name="description" id="description">
+        <input type="submit" value="Add!" />
+    </form>
+</body>
+
+</html>
