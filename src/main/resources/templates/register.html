@@ -8,7 +8,7 @@
 
 <body>
 
-    <h1>Sign up to Wiitteri</h1>
+    <h1>Register to Wiitteri</h1>
 
     <form th:action="@{/register}" method="POST">
         <input type="text" name="username" />
@@ -16,6 +16,8 @@
         <input type="text" name="handle" />
         <input type="submit" />
     </form>
+
+    Already registered? Login <a th:href="@{/login}">here</a>.
 
 </body>
 

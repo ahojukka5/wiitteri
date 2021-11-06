@@ -16,13 +16,13 @@ public class ProfileController {
     @Autowired
     AccountService userService;
 
-    @GetMapping("/{username}")
+    @GetMapping("/profiles/{username}")
     public String profile(Model model, @PathVariable String username) {
         model.addAttribute("username", username);
         return "profile";
     }
 
-    @GetMapping("/{username}/follow")
+    @GetMapping("/profiles/{username}/follow")
     public String follow(Model model, @PathVariable String username) {
         logger.debug("Following user " + username);
         userService.follow(username);
@@ -30,7 +30,7 @@ public class ProfileController {
         return "redirect:/" + username;
     }
 
-    @GetMapping("/{username}/block")
+    @GetMapping("/profiles/{username}/block")
     public String block(Model model, @PathVariable String username) {
         logger.debug("Blocking user " + username);
         userService.block(username);

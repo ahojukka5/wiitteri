@@ -15,7 +15,7 @@ public class LoginController {
 
     @Autowired
     private LoginService loginService;
-
+/*
     @GetMapping("/login")
     public String login_get() {
         return "login";
@@ -35,4 +35,5 @@ public class LoginController {
         loginService.login(username, password);
         return "redirect:/";
     }
+*/
 }

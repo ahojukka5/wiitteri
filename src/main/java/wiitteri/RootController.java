@@ -15,8 +15,7 @@ public class RootController {
     public String index(Model model) {
         if (loginService.isLogged()) {
             return "redirect:/home";
-        } else {
-            return "redirect:/login";
         }
+        return "landing";
     }
 }
