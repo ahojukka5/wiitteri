@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 public class Account extends AbstractPersistable<Long> {
 
     private String username;
-    private String passwordHash;
+    private String password;
     private String handle;
 
     @OneToMany(mappedBy = "to")
@@ -30,7 +30,7 @@ public class Account extends AbstractPersistable<Long> {
 
     public Account(String username, String password, String handle) {
         this.username = username;
-        this.passwordHash = "";
+        this.password = password;
         this.handle = handle;
         this.followers = new ArrayList<>();
         this.following = new ArrayList<>();

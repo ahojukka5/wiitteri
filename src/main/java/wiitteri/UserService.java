@@ -20,7 +20,7 @@ public class UserService {
     private HttpSession session;
 
     @Autowired
-    private UserRepository userRepository;
+    private AccountRepository userRepository;
 
     @Autowired
     private ConnectionRepository connectionRepository;

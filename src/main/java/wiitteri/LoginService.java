@@ -16,7 +16,7 @@ public class LoginService {
     private HttpSession session;
 
     @Autowired
-    private UserRepository userRepository;
+    private AccountRepository userRepository;
 
     public void login(String username, String password) {
         Account account = userRepository.findByUsername(username);

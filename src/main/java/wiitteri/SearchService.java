@@ -13,7 +13,7 @@ public class SearchService {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
-    private UserRepository userRepository;
+    private AccountRepository userRepository;
 
     public List<Account> search(String query) {
         logger.debug("Searching by username, query string = " + query);

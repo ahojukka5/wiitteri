@@ -19,7 +19,7 @@ public class ImageController {
     UserService userService;
 
     @Autowired
-    UserRepository userRepository;
+    AccountRepository userRepository;
 
     @Autowired
     private ImageRepository imageRepository;
