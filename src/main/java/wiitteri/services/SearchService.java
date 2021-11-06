@@ -16,11 +16,11 @@ public class SearchService {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
-    private AccountRepository userRepository;
+    private AccountRepository accountRepository;
 
     public List<Account> search(String query) {
         logger.debug("Searching by username, query string = " + query);
-        return userRepository.findByUsernameContainingIgnoreCase(query);
+        return accountRepository.findByUsernameContainingIgnoreCase(query);
     }
 
 }
