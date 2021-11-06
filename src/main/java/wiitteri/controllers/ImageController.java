@@ -1,4 +1,4 @@
-package wiitteri;
+package wiitteri.controllers;
 
 import java.io.IOException;
 
@@ -11,6 +11,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+
+import wiitteri.models.Account;
+import wiitteri.models.Image;
+import wiitteri.repositories.AccountRepository;
+import wiitteri.repositories.ImageRepository;
+import wiitteri.services.AccountService;
 
 @Controller
 public class ImageController {

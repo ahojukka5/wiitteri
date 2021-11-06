@@ -1,4 +1,4 @@
-package wiitteri;
+package wiitteri.models;
 
 import java.time.LocalDateTime;
 

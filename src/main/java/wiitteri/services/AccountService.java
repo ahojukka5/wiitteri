@@ -1,4 +1,4 @@
-package wiitteri;
+package wiitteri.services;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -9,6 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+
+import wiitteri.models.Account;
+import wiitteri.models.Connection;
+import wiitteri.repositories.AccountRepository;
+import wiitteri.repositories.ConnectionRepository;
 
 @Service
 public class AccountService {

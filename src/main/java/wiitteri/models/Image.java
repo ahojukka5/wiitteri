@@ -1,4 +1,4 @@
-package wiitteri;
+package wiitteri.models;
 
 import javax.persistence.Basic;
 import javax.persistence.Entity;
