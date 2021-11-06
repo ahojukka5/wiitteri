@@ -25,14 +25,14 @@ public class UserService {
     @Autowired
     private ConnectionRepository connectionRepository;
 
-    public User getLoggedUser() {
+    public Account getLoggedUser() {
         String loggedUsername = (String) session.getAttribute("username");
         return userRepository.findByUsername(loggedUsername);
     }
 
     public void follow(String otherUsername) {
-        User loggedUser = getLoggedUser();
-        User otherUser = userRepository.findByUsername(otherUsername);
+        Account loggedUser = getLoggedUser();
+        Account otherUser = userRepository.findByUsername(otherUsername);
         logger.debug(loggedUser.getUsername() + " is following " + otherUser.getUsername());
         Connection connection = new Connection(loggedUser, otherUser);
         connectionRepository.save(connection);
@@ -41,7 +41,7 @@ public class UserService {
     public void createAccount(String username, String password, String handle) {
         // TODO: hashing password here?
         String passwordHash = password;
-        User user = new User(username, passwordHash, handle);
+        Account user = new Account(username, passwordHash, handle);
         userRepository.save(user);
     }
 
@@ -54,8 +54,8 @@ public class UserService {
     }
 
     public void block(String username) {
-        User loggedUser = getLoggedUser();
-        User otherUser = userRepository.findByUsername(username);
+        Account loggedUser = getLoggedUser();
+        Account otherUser = userRepository.findByUsername(username);
         Connection connection = connectionRepository.findByFromAndTo(otherUser, loggedUser);
         if (connection == null) {
             String me = loggedUser.getHandle();

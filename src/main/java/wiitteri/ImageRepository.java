@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ImageRepository extends JpaRepository<Image, Long> {
 
-    List<Image> findByOwner(User owner);
+    List<Image> findByOwner(Account owner);
 
 }

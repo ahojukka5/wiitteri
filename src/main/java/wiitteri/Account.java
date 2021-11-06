@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class User extends AbstractPersistable<Long> {
+public class Account extends AbstractPersistable<Long> {
 
     private String username;
     private String passwordHash;
@@ -28,7 +28,7 @@ public class User extends AbstractPersistable<Long> {
     @OneToMany(mappedBy = "from")
     private List<Connection> following;
 
-    public User(String username, String password, String handle) {
+    public Account(String username, String password, String handle) {
         this.username = username;
         this.passwordHash = "";
         this.handle = handle;

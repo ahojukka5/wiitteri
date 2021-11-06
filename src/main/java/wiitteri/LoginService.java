@@ -19,7 +19,7 @@ public class LoginService {
     private UserRepository userRepository;
 
     public void login(String username, String password) {
-        User account = userRepository.findByUsername(username);
+        Account account = userRepository.findByUsername(username);
         if (account != null) {
             logger.debug("Account with username " + username + " found.");
             session.setAttribute("username", username);

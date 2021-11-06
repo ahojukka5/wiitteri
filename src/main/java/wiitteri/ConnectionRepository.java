@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ConnectionRepository extends JpaRepository<Connection, Long> {
 
-    Connection findByFromAndTo(User from, User to);
+    Connection findByFromAndTo(Account from, Account to);
 
 }

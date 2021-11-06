@@ -15,7 +15,7 @@ public class SearchService {
     @Autowired
     private UserRepository userRepository;
 
-    public List<User> search(String query) {
+    public List<Account> search(String query) {
         logger.debug("Searching by username, query string = " + query);
         return userRepository.findByUsernameContainingIgnoreCase(query);
     }

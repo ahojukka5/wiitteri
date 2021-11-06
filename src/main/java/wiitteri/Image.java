@@ -20,7 +20,7 @@ public class Image extends AbstractPersistable<Long> {
     private String description;
 
     @ManyToOne
-    private User owner;
+    private Account owner;
 
     @Lob
     @Basic(fetch = FetchType.LAZY)

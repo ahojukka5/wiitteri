@@ -26,7 +26,7 @@ public class ImageController {
 
     @GetMapping("/{username}/images")
     public String listImages(Model model, @PathVariable String username) {
-        User user = userRepository.findByUsername(username);
+        Account user = userRepository.findByUsername(username);
         model.addAttribute("username", username);
         model.addAttribute("images", imageRepository.findByOwner(user));
         return "images";
@@ -41,7 +41,7 @@ public class ImageController {
     @PostMapping("/{username}/images")
     public String save(@PathVariable String username, @RequestParam MultipartFile file,
             @RequestParam String description) throws IOException {
-        User owner = userService.getLoggedUser();
+        Account owner = userService.getLoggedUser();
         Image image = new Image(description, owner, file.getBytes());
         imageRepository.save(image);
         return "redirect:/" + owner.getUsername() + "/images";
