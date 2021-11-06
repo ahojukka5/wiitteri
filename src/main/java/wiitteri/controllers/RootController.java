@@ -5,17 +5,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import wiitteri.services.LoginService;
+import wiitteri.services.AccountService;
 
 @Controller
 public class RootController {
 
     @Autowired
-    private LoginService loginService;
+    private AccountService accountService;
 
     @GetMapping("/")
     public String index(Model model) {
-        if (loginService.isLogged()) {
+        if (accountService.isLogged()) {
             return "redirect:/home";
         }
         return "landing";
