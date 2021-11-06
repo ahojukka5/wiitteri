@@ -20,19 +20,19 @@ public class AccountService {
     private HttpSession session;
 
     @Autowired
-    private AccountRepository userRepository;
+    private AccountRepository accountRepository;
 
     @Autowired
     private ConnectionRepository connectionRepository;
 
     public Account getLoggedUser() {
         String loggedUsername = (String) session.getAttribute("username");
-        return userRepository.findByUsername(loggedUsername);
+        return accountRepository.findByUsername(loggedUsername);
     }
 
     public void follow(String otherUsername) {
         Account loggedUser = getLoggedUser();
-        Account otherUser = userRepository.findByUsername(otherUsername);
+        Account otherUser = accountRepository.findByUsername(otherUsername);
         logger.debug(loggedUser.getUsername() + " is following " + otherUser.getUsername());
         Connection connection = new Connection(loggedUser, otherUser);
         connectionRepository.save(connection);
@@ -42,7 +42,7 @@ public class AccountService {
         // TODO: hashing password here?
         String passwordHash = password;
         Account user = new Account(username, passwordHash, handle);
-        userRepository.save(user);
+        accountRepository.save(user);
     }
 
     public List<Connection> getFollowing() {
@@ -55,7 +55,7 @@ public class AccountService {
 
     public void block(String username) {
         Account loggedUser = getLoggedUser();
-        Account otherUser = userRepository.findByUsername(username);
+        Account otherUser = accountRepository.findByUsername(username);
         Connection connection = connectionRepository.findByFromAndTo(otherUser, loggedUser);
         if (connection == null) {
             String me = loggedUser.getHandle();
@@ -64,6 +64,10 @@ public class AccountService {
         }
         connection.setActive(false);
         connectionRepository.save(connection);
+    }
+
+    public boolean hasUser(String username) {
+        return accountRepository.findByUsername(username) != null;
     }
 
 }
