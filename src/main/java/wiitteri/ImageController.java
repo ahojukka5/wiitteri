@@ -16,7 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class ImageController {
 
     @Autowired
-    UserService userService;
+    AccountService userService;
 
     @Autowired
     AccountRepository userRepository;

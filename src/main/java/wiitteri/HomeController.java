@@ -16,7 +16,7 @@ public class HomeController {
     private LoginService loginService;
 
     @Autowired
-    private UserService userService;
+    private AccountService userService;
 
     @GetMapping("/home")
     public String home(Model model) {

@@ -14,7 +14,7 @@ public class AccountController {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
-    private UserService userService;
+    private AccountService userService;
 
     @GetMapping("/register")
     public String signup() {

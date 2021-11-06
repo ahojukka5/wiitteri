@@ -14,7 +14,7 @@ public class ProfileController {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
-    UserService userService;
+    AccountService userService;
 
     @GetMapping("/{username}")
     public String profile(Model model, @PathVariable String username) {
