@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/layout :: head"></head>
+
+<body>
+    <div id="wrap">
+        <div th:replace="fragments/layout :: navbar"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>Profiles</h1>
+                    <ul>
+                        <li th:each="user: ${users}">
+                            <a th:href="@{/profiles/{handle}(handle=${user.getHandle()})}">
+                                <span th:text="${'@' + user.getHandle()}">user</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div th:replace="fragments/layout :: footer"></div>
+</body>
+
+</html>
