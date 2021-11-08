@@ -76,12 +76,12 @@
                 <section>
                     <div class="row">
                         <div class="col-md-12">
-                            <h2 class="text-center">Image gallery (<span th:text="${numberOfImages}">0</span> images)
+                            <h2 class="text-center">Image gallery (<span th:text="${numberOfImages}">0</span>/10 images)
                             </h2>
                         </div>
                     </div>
 
-                    <div class="row">
+                    <div class="row" th:if="${canUploadImages}">
                         <div class="col-md-12">
                             <p>Add new image</p>
                             <form method="POST" th:action="@{/images}" enctype="multipart/form-data">
@@ -101,6 +101,12 @@
                                 <img class="img-responsive imageClip" th:src="@{/images/{id}(id=${image.id})}" />
                             </div>
                             <p class="muted text-center" th:text="${image.description}"></p>
+                        </div>
+                    </div>
+
+                    <div class="row" th:if="${!canUploadImages}">
+                        <div class="col-md-12">
+                            <p>To upload more images, delete some old ones first</p>
                         </div>
                     </div>
 

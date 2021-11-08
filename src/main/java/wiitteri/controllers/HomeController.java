@@ -24,6 +24,7 @@ public class HomeController {
         List<Image> images = accountService.getImages();
         model.addAttribute("images", images);
         model.addAttribute("numberOfImages", images.size());
+        model.addAttribute("canUploadImages", images.size() < 10);
         return "home";
     }
 
