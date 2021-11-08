@@ -1,22 +1,31 @@
 <!DOCTYPE HTML>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
-<head>
-    <meta charset="UTF-8" />
-    <title>Hello world</title>
-</head>
+<head th:replace="fragments/layout :: head"></head>
 
 <body>
+    <div id="wrap">
+        <div th:replace="fragments/layout :: navbar"></div>
 
-    <h1 th:text="${'Matches for search string ' + searchString}">Hello world</h1>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 order-2 order-lg-1">
+                    <h1 th:text="${'Matches for search string ' + searchString}">query</h1>
+                    <ul>
+                        <li th:each="user: ${users}">
+                            <a th:href="@{/profiles/{handle}(handle=${user.getHandle()})}">
+                                <span th:text="${user.getName() + ' (@' + user.getHandle() + ')'}">user</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div id="push"></div>
+    </div>
 
-    <ul>
-        <li th:each="user: ${users}">
-            <a th:href="@{/{handle}(handle=${user.getHandle()})}">
-                <span th:text="${user.getUsername()}">user</span>
-            </a>
-        </li>
-    </ul>
+    <div th:replace="fragments/layout :: footer"></div>
+
 </body>
 
 </html>
