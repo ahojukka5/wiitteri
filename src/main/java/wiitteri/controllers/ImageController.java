@@ -25,23 +25,20 @@ public class ImageController {
     AccountService userService;
 
     @Autowired
-    AccountRepository userRepository;
+    ImageService imageService;
 
-    @Autowired
-    private ImageRepository imageRepository;
-
-    @GetMapping("/{username}/images")
-    public String listImages(Model model, @PathVariable String username) {
-        Account user = userRepository.findByUsername(username);
-        model.addAttribute("username", username);
-        model.addAttribute("images", imageRepository.findByOwner(user));
+    @GetMapping("/{handle}/images")
+    public String listImages(Model model, @PathVariable String handle) {
+        Account user = accountService.findUserByHandle(handle);
+        model.addAttribute("handle", handle);
+        model.addAttribute("images", imageService.getImages(user));
         return "images";
     }
 
     @GetMapping(path = "/images/{id}", produces = "image/png")
     @ResponseBody
     public byte[] getImage(@PathVariable Long id) {
-        return imageRepository.getOne(id).getContent();
+        return imageService.getImage(id).getContent();
     }
 
     @PostMapping("/{username}/images")
