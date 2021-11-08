@@ -70,13 +70,13 @@ public class AccountService {
         return getLoggedUser().getFollowers().stream().filter(Connection::isActive).collect(Collectors.toList());
     }
 
-    public void block(String username) {
+    public void block(String handle) {
         Account loggedUser = getLoggedUser();
-        Account otherUser = accountRepository.findByUsername(username);
+        Account otherUser = accountRepository.findByHandle(handle);
         Connection connection = connectionRepository.findByFromAndTo(otherUser, loggedUser);
         if (connection == null) {
             String me = loggedUser.getHandle();
-            logger.error("Connection between " + username + " and " + me + " not found!");
+            logger.error("Connection between @" + handle + " and @" + me + " not found!");
             return;
         }
         connection.setActive(false);
