@@ -95,6 +95,22 @@ public class AccountService {
         return getLoggedUser().getHandle();
     }
 
+    public boolean isFollowing(String handle) {
+        Account loggedUser = getLoggedUser();
+        Account otherUser = accountRepository.findByHandle(handle);
+        logger.debug("Checking is " + loggedUser.getHandle() + " following " + otherUser.getHandle() + " ...");
+        if (loggedUser == otherUser) {
+            return true;
+        }
+        Connection connection = connectionRepository.findByFromAndTo(loggedUser, otherUser);
+        if (connection != null) {
+            logger.debug("Yes, following since " + connection.getCreated());
+        } else {
+            logger.debug("Connection not found");
+        }
+        return connection != null;
+    }
+
     public Account findUserByHandle(String handle) {
         return accountRepository.findByHandle(handle);
     }
