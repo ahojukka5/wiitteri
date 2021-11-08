@@ -22,6 +22,10 @@ public class Account extends AbstractPersistable<Long> {
 
     @NotEmpty
     @Size(min = 2, max = 30)
+    private String name;
+
+    @NotEmpty
+    @Size(min = 2, max = 30)
     private String username;
 
     @NotEmpty
@@ -37,7 +41,8 @@ public class Account extends AbstractPersistable<Long> {
     @OneToMany(mappedBy = "from")
     private List<Connection> following;
 
-    public Account(String username, String password, String handle) {
+    public Account(String name, String username, String password, String handle) {
+        this.name = name;
         this.username = username;
         this.password = password;
         this.handle = handle;
