@@ -11,12 +11,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import wiitteri.models.Account;
 import wiitteri.models.Image;
 import wiitteri.repositories.AccountRepository;
 import wiitteri.repositories.ImageRepository;
 import wiitteri.services.AccountService;
+import wiitteri.services.ImageService;
 
 @Controller
 public class ImageController {
@@ -41,12 +43,12 @@ public class ImageController {
         return imageService.getImage(id).getContent();
     }
 
-    @PostMapping("/{username}/images")
-    public String save(@PathVariable String username, @RequestParam MultipartFile file,
-            @RequestParam String description) throws IOException {
-        Account owner = userService.getLoggedUser();
-        Image image = new Image(description, owner, file.getBytes());
-        imageRepository.save(image);
-        return "redirect:/" + owner.getUsername() + "/images";
+    @GetMapping(path = "/images/{id}/delete")
+    public String deleteImage(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        imageService.deleteImage(id);
+        redirectAttributes.addFlashAttribute("infoMessage", "Image deleted succesfully!");
+        return "redirect:/home";
+    }
+
     }
 }
