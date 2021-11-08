@@ -32,56 +32,67 @@
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="page-header">
-                            <h1 th:text="${'Hello @' + handle}">handle</h1>
+                <section>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h2 class="text-center">User information</h2>
                         </div>
                     </div>
-                </div>
 
-                <div class="row" th:if="${user.hasProfileImage()}">
-                    <div class="col-md-12">
-                        profile picture:
-                        <div class="profileImage">
-                            <img class="img-responsive imageClip"
-                                th:src="@{/images/{id}(id=${user.getProfileImage().id})}" />
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="profileImage" th:if="${user.hasProfileImage()}">
+                                <img class="img-responsive imageClip"
+                                    th:src="@{/images/{id}(id=${user.getProfileImage().id})}" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="page-header">
+                                <h4 th:text="${'Name: ' + user.getName()}"></h4>
+                                <h4 th:text="${'Handle: @' + user.getHandle()}"></h4>
+                                <h4 th:text="${'Username: ' + user.getUsername()}"></h4>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="row">
-                    <div class="col-md-12 order-2 order-lg-1">
-                        <p>You are following:</p>
-                        <ul>
-                            <li th:each="f: ${following}">
-                                <a th:href="@{/profiles/{handle}(handle=${f.getTo().getHandle()})}">
-                                    <span th:text="${'@' + f.getTo().getHandle()}">handle</span>
-                                </a>
-                                since
-                                <span th:text="${f.getCreated()}">created</span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+                </section>
 
-                <div class="row">
-                    <div class="col-md-12 order-2 order-lg-1">
-                        <p>You have followers:</p>
-                        <ul>
-                            <li th:each="f: ${followers}">
-                                <a th:href="@{/profiles/{handle}(handle=${f.getFrom().getHandle()})}">
-                                    <span th:text="${'@' + f.getFrom().getHandle()}">handle</span>
-                                </a>
-                                since
-                                <span th:text="${f.getCreated()}">created</span>
-                                <a th:href="@{/profiles/{handle}/block(handle=${f.getFrom().getHandle()})}">
-                                    block user
-                                </a>
-                            </li>
-                        </ul>
+                <section>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h2 class="text-center">Following & Followers</h2>
+                        </div>
                     </div>
-                </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p>You have followers:</p>
+                            <ul>
+                                <li th:each="f: ${followers}">
+                                    <a th:href="@{/profiles/{handle}(handle=${f.getFrom().getHandle()})}">
+                                        <span th:text="${'@' + f.getFrom().getHandle()}">handle</span>
+                                    </a>
+                                    since
+                                    <span th:text="${f.getCreated()}">created</span>
+                                    <a th:href="@{/profiles/{handle}/block(handle=${f.getFrom().getHandle()})}">
+                                        block user
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <p>You are following:</p>
+                            <ul>
+                                <li th:each="f: ${following}">
+                                    <a th:href="@{/profiles/{handle}(handle=${f.getTo().getHandle()})}">
+                                        <span th:text="${'@' + f.getTo().getHandle()}">handle</span>
+                                    </a>
+                                    since
+                                    <span th:text="${f.getCreated()}">created</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
 
                 <section>
                     <div class="row">
