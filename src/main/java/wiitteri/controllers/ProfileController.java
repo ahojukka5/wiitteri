@@ -25,12 +25,18 @@ public class ProfileController {
         return "profile";
     }
 
-    @GetMapping("/profiles/{username}/follow")
-    public String follow(Model model, @PathVariable String username) {
-        logger.debug("Following user " + username);
-        userService.follow(username);
-        model.addAttribute("username", username);
-        return "redirect:/" + username;
+    @GetMapping("/profiles/{handle}/follow")
+    public String follow(Model model, @PathVariable String handle, RedirectAttributes redirectAttributes) {
+        if (handle.equals(accountService.getHandle())) {
+            logger.debug("User @" + handle + " tries to follow him/herself!");
+            redirectAttributes.addFlashAttribute("errorMessage", "You cannot follow yourself!");
+            return "redirect:/profiles/" + handle;
+        }
+        logger.debug(accountService.getHandle() + " is following user " + handle);
+        accountService.follow(handle);
+        model.addAttribute("handle", handle);
+        redirectAttributes.addFlashAttribute("infoMessage", "You are now following user @" + handle);
+        return "redirect:/profiles/" + handle;
     }
 
     @GetMapping("/profiles/{handle}/block")
