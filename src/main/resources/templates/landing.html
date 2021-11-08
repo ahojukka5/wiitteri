@@ -2,19 +2,132 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="UTF-8" />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Wiitteri</title>
+    <meta name="description" content="Building Your First Bootstrap Template by Buddy">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="all,follow">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/assets/styles.css}" />
+    <link rel="stylesheet" th:href="@{/assets/landing.css}" />
 </head>
 
 <body>
 
-    <h1>Happened yesterday</h1>
-    <h2>Join Wiitteri today.</h2>
+    <header>
+        <div class="container-fluid bg-light masthead"></div>
+    </header>
 
-    Sign up <a th:href="@{/register}">here</a>.
+    <section class="bg-light">
+        <div class="spacer"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 order-2 order-lg-1">
+                    <h1>Welcome to Wiitteri!</h1>
+                    <hr />
+                    <p class="lead">Wiitteri, <emph>"wanhan ajan twiitteri"</emph> is all about "what happened
+                        yesterday" (or was it day
+                        before that ..?). Wiitteri is a social networking service for old school persons. If you know
+                        something about modern web design, do not enter. </p>
+                    <hr />
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>Sign In</h3>
+                        </div>
+                        <div class="card-body">
+                            <div th:if="${param.error}" class="alert alert-error">
+                                Invalid username and password.
+                            </div>
+                            <div th:if="${param.logout}" class="alert alert-success">
+                                You have been logged out.
+                            </div>
+                            <form th:action="@{/}" method="POST">
+                                <div class="input-group form-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                    </div>
+                                    <input type="text" id="username" name="username" class="form-control"
+                                        placeholder="username">
 
-    Already have an account? <a th:href="@{/login}">Sign in</a>
+                                </div>
+                                <div class="input-group form-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-key"></i></span>
+                                    </div>
+                                    <input type="password" id="password" name="password" class="form-control"
+                                        placeholder="password">
+                                </div>
+                                <div class="form-group">
+                                    <input type="submit" value="Login" class="btn float-right login_btn">
+                                </div>
+                            </form>
+                        </div>
 
+                        <div class="card-footer">
+                            <div class="d-flex justify-content-center links">
+                                Don't have an account?<a th:href="@{/register}">Sign Up</a>
+                            </div>
+                            <div class="d-flex justify-content-center">
+                                <a href="#" onClick="alert('Try with username and password `uolevi`')">Forgot your
+                                    password?</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-lg-6 order-1 order-lg-2 d-flex justify-content-center">
+                    <img src="/assets/nok.png" alt="landing image" class="img-fluid">
+                </div>
+            </div>
+            <div class="spacer"></div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <blockquote class="blockquote text-center mb-0">
+                <div class="spacer"></div>
+                <p class="mb-0">Debugging is twice as hard as writing the code in the first place. Therefore, if you
+                    write the code as cleverly as possible, you are, by definition, not smart enough to debug it.</p>
+                <footer class="blockquote-footer">Brian Kernighan
+                </footer>
+                <div class="spacer"></div>
+            </blockquote>
+        </div>
+    </section>
+
+    <div class="py-5 bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <h5>Wiitteri</h5>
+                    <ul class="contact-info list-unstyled">
+                        <li><a href="#" class="text-dark">do-not-reply@wiitteri.com</a></li>
+                        <li><a href="#" class="text-dark">+358 123 4567</a></li>
+                    </ul>
+                    <p class="text-muted">Disclaimer: the creator of this service does not take any respond to any harm
+                        (including, but not limited to brain damage) this service might cause for the users.</p>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <h5>Information</h5>
+                    <ul class="links list-unstyled">
+                        <li> <a href="https://www.linkedin.com/in/ahojukka5/" class="text-muted">My LinkedIn profile</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <h5>More Info</h5>
+                    <ul class="links list-unstyled">
+                        <li> <a href="https://github.com/ahojukka5/wiitteri" class="text-muted">The source code of this
+                                project</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="fragments/layout :: footer"></div>
 </body>
 
 </html>
