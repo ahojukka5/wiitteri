@@ -87,4 +87,8 @@ public class AccountService {
         return accountRepository.findByUsername(username) != null;
     }
 
+    public List<Account> findAll() {
+        return accountRepository.findAll();
+    }
+
 }
