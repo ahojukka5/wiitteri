@@ -17,11 +17,14 @@ public class ProfileController {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
-    AccountService userService;
+    AccountService accountService;
 
-    @GetMapping("/profiles/{username}")
-    public String profile(Model model, @PathVariable String username) {
-        model.addAttribute("username", username);
+    @GetMapping("/profiles")
+    public String profiles(Model model) {
+        model.addAttribute("users", accountService.findAll());
+        return "profiles";
+    }
+
         return "profile";
     }
 
