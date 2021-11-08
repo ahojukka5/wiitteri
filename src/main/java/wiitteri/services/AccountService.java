@@ -132,4 +132,11 @@ public class AccountService {
         Image image = new Image(description, getLoggedUser(), bytes);
         imageRepository.save(image);
     }
+
+    public void updateProfileImage(Image profileImage) {
+        Account user = getLoggedUser();
+        user.setProfileImage(profileImage);
+        accountRepository.save(user);
+    }
+
 }
