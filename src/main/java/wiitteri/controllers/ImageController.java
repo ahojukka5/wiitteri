@@ -41,6 +41,13 @@ public class ImageController {
         return "redirect:/home";
     }
 
+    @GetMapping(path = "/images/{id}/use_as_profile_picture")
+    public String useAsProfilePicture(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        imageService.useAsProfilePicture(id);
+        redirectAttributes.addFlashAttribute("infoMessage", "Profile picture changed!");
+        return "redirect:/home";
+    }
+
     @PostMapping("/images")
     public String save(@RequestParam MultipartFile file, @RequestParam String description,
             RedirectAttributes redirectAttributes) throws IOException {
