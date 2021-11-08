@@ -54,4 +54,9 @@ public class ImageService {
     public void addImage(byte[] bytes, String description) {
         addImage(accountService.getLoggedUser(), bytes, description);
     }
+
+    public void useAsProfilePicture(Long id) {
+        Image profileImage = getImage(id);
+        accountService.updateProfileImage(profileImage);
+    }
 }
