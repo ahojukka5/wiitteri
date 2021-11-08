@@ -124,4 +124,8 @@ public class AccountService {
         return imageRepository.findByOwner(user);
     }
 
+    public List<Image> getImages() {
+        return getImages(getLoggedUser());
+    }
+
 }
