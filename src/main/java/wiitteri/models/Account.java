@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
@@ -40,6 +41,9 @@ public class Account extends AbstractPersistable<Long> {
 
     @OneToMany(mappedBy = "from")
     private List<Connection> following;
+
+    @OneToOne
+    private Image profileImage;
 
     public Account(String name, String username, String password, String handle) {
         this.name = name;
