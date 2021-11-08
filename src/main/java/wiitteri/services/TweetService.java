@@ -3,6 +3,7 @@ package wiitteri.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import wiitteri.models.Tweet;
@@ -22,8 +23,12 @@ public class TweetService {
         tweetRepository.save(tweet);
     }
 
-    public List<Tweet> getTweets() {
+    public List<Tweet> getTweetsByTweeterIds() {
         return tweetRepository.findAll();
+    }
+
+    public List<Tweet> getTweetsByTweeterIds(List<Long> tweeterIds, Pageable p) {
+        return tweetRepository.findByOwnerIdIn(tweeterIds, p);
     }
 
 }
