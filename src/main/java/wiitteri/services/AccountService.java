@@ -128,4 +128,8 @@ public class AccountService {
         return getImages(getLoggedUser());
     }
 
+    public void addImage(byte[] bytes, String description) {
+        Image image = new Image(description, getLoggedUser(), bytes);
+        imageRepository.save(image);
+    }
 }
