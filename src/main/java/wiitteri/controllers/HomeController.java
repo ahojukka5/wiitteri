@@ -25,6 +25,7 @@ public class HomeController {
         model.addAttribute("images", images);
         model.addAttribute("numberOfImages", images.size());
         model.addAttribute("canUploadImages", images.size() < 10);
+        model.addAttribute("user", accountService.getLoggedUser());
         return "home";
     }
 
