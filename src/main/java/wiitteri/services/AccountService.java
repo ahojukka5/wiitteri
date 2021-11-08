@@ -91,4 +91,8 @@ public class AccountService {
         return accountRepository.findAll();
     }
 
+    public String getHandle() {
+        return getLoggedUser().getHandle();
+    }
+
 }
