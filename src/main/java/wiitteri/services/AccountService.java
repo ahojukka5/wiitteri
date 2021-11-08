@@ -48,9 +48,9 @@ public class AccountService {
         return false;
     }
 
-    public void follow(String otherUsername) {
+    public void follow(String handle) {
         Account loggedUser = getLoggedUser();
-        Account otherUser = accountRepository.findByUsername(otherUsername);
+        Account otherUser = accountRepository.findByHandle(handle);
         logger.debug(loggedUser.getUsername() + " is following " + otherUser.getUsername());
         Connection connection = new Connection(loggedUser, otherUser);
         connectionRepository.save(connection);
