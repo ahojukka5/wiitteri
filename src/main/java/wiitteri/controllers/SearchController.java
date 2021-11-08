@@ -17,7 +17,7 @@ public class SearchController {
     @GetMapping("/search")
     public String serch(Model model, @RequestParam String q) {
         model.addAttribute("searchString", q);
-        model.addAttribute("users", searchService.search(q));
+        model.addAttribute("users", searchService.searchByName(q));
         return "search";
     }
 
