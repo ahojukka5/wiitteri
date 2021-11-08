@@ -19,7 +19,11 @@ public class ImageService {
     AccountService accountService;
 
     public List<Image> getImages(Account user) {
-        return imageRepository.findAll();
+        return imageRepository.findByOwner(user);
+    }
+
+    public List<Image> getImages() {
+        return imageRepository.findByOwner(accountService.getLoggedUser());
     }
 
     public Image getImage(Long id) {
@@ -31,4 +35,23 @@ public class ImageService {
         imageRepository.delete(image);
     }
 
+    public int numberOfImages(Account user) {
+        return getImages(user).size();
+    }
+
+    public int numberOfImages() {
+        return getImages(accountService.getLoggedUser()).size();
+    }
+
+    public List<Image> getImagesByHandle(String handle) {
+        return getImages(accountService.findUserByHandle(handle));
+    }
+
+    public void addImage(Account user, byte[] bytes, String description) {
+        accountService.addImage(bytes, description);
+    }
+
+    public void addImage(byte[] bytes, String description) {
+        addImage(accountService.getLoggedUser(), bytes, description);
+    }
 }
