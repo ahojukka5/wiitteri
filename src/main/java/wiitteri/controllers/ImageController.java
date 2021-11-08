@@ -14,9 +14,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import wiitteri.models.Account;
-import wiitteri.models.Image;
-import wiitteri.repositories.AccountRepository;
-import wiitteri.repositories.ImageRepository;
 import wiitteri.services.AccountService;
 import wiitteri.services.ImageService;
 
@@ -24,7 +21,7 @@ import wiitteri.services.ImageService;
 public class ImageController {
 
     @Autowired
-    AccountService userService;
+    AccountService accountService;
 
     @Autowired
     ImageService imageService;
@@ -50,5 +47,11 @@ public class ImageController {
         return "redirect:/home";
     }
 
+    @PostMapping("/images")
+    public String save(@RequestParam MultipartFile file, @RequestParam String description,
+            RedirectAttributes redirectAttributes) throws IOException {
+        accountService.addImage(file.getBytes(), description);
+        redirectAttributes.addFlashAttribute("infoMessage", "New image added!");
+        return "redirect:/home";
     }
 }
