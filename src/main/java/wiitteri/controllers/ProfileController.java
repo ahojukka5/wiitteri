@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import wiitteri.services.AccountService;
 
@@ -32,10 +33,11 @@ public class ProfileController {
         return "redirect:/" + username;
     }
 
-    @GetMapping("/profiles/{username}/block")
-    public String block(Model model, @PathVariable String username) {
-        logger.debug("Blocking user " + username);
-        userService.block(username);
+    @GetMapping("/profiles/{handle}/block")
+    public String block(Model model, @PathVariable String handle, RedirectAttributes redirectAttributes) {
+        logger.debug("Blocking user @" + handle);
+        accountService.block(handle);
+        redirectAttributes.addFlashAttribute("infoMessage", "User @" + handle + " is blocked");
         return "redirect:/home";
     }
 }
