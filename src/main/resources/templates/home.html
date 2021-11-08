@@ -1,43 +1,117 @@
 <!DOCTYPE HTML>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
-<head>
-    <meta charset="UTF-8" />
-    <title>Hello world</title>
-</head>
+<head th:replace="fragments/layout :: head"></head>
 
 <body>
 
-    <h1 th:text="${'Hello ' + username}">Hello world</h1>
+    <div id="wrap">
+        <div th:replace="fragments/layout :: navbar"></div>
 
-    <p>You are following:</p>
-    <ul>
-        <li th:each="f: ${following}">
-            <a th:href="@{/{handle}(handle=${f.getTo().getHandle()})}">
-                <span th:text="${f.getTo().getUsername()}">username</span>
-                since
-                <span th:text="${f.getCreated()}">created</span>
-            </a>
-        </li>
-    </ul>
+        <section>
+            <div class="container">
+                <div class="row" th:if="${errorMessage != null}">
+                    <div class="col-md-12">
+                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                            <span th:text="${errorMessage}">errorMessage</span>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
 
-    <p>You have followers:</p>
-    <ul>
-        <li th:each="f: ${followers}">
-            <a th:href="@{/{handle}(handle=${f.getFrom().getHandle()})}">
-                <span th:text="${f.getFrom().getUsername()}">username</span>
-            </a>
-            since
-            <span th:text="${f.getCreated()}">created</span>
-            <a th:href="@{/{handle}/block(handle=${f.getFrom().getHandle()})}">
-                block user
-            </a>
-        </li>
-    </ul>
+                <div class="row" th:if="${infoMessage != null}">
+                    <div class="col-md-12">
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <span th:text="${infoMessage}">infoMessage</span>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
 
-    <form th:action="@{/logout}" method="GET">
-        <button type="submit">Logout</button>
-    </form>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="page-header">
+                            <h1 th:text="${'Hello @' + handle}">handle</h1>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12 order-2 order-lg-1">
+                        <p>You are following:</p>
+                        <ul>
+                            <li th:each="f: ${following}">
+                                <a th:href="@{/profiles/{handle}(handle=${f.getTo().getHandle()})}">
+                                    <span th:text="${'@' + f.getTo().getHandle()}">handle</span>
+                                </a>
+                                since
+                                <span th:text="${f.getCreated()}">created</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12 order-2 order-lg-1">
+                        <p>You have followers:</p>
+                        <ul>
+                            <li th:each="f: ${followers}">
+                                <a th:href="@{/profiles/{handle}(handle=${f.getFrom().getHandle()})}">
+                                    <span th:text="${'@' + f.getFrom().getHandle()}">handle</span>
+                                </a>
+                                since
+                                <span th:text="${f.getCreated()}">created</span>
+                                <a th:href="@{/profiles/{handle}/block(handle=${f.getFrom().getHandle()})}">
+                                    block user
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <section>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h2 class="text-center">Image gallery (<span th:text="${numberOfImages}">0</span> images)
+                            </h2>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p>Add new image</p>
+                            <form method="POST" th:action="@{/images}" enctype="multipart/form-data">
+                                <input type="file" name="file" id="file" />
+                                <label for="description">Description:</label>
+                                <input type="text" name="description" id="description">
+                                <input type="submit" value="Add!" />
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4" th:each="image: ${images}">
+                            <a th:href="@{/images/{id}/delete(id=${image.id})}"><span
+                                    class="fa fa-minus-circle"></span></a>
+                            <div class="imageContainer">
+                                <img class="img-responsive imageClip" th:src="@{/images/{id}(id=${image.id})}" />
+                            </div>
+                            <p class="muted text-center" th:text="${image.description}"></p>
+                        </div>
+                    </div>
+
+                </section>
+
+            </div>
+        </section>
+        <div id="push"></div>
+    </div>
+
+    <div th:replace="fragments/layout :: footer"></div>
 
 </body>
 
