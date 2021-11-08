@@ -13,24 +13,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import wiitteri.models.Account;
-import wiitteri.services.AccountService;
 import wiitteri.services.ImageService;
 
 @Controller
 public class ImageController {
 
     @Autowired
-    AccountService accountService;
-
-    @Autowired
     ImageService imageService;
 
     @GetMapping("/{handle}/images")
     public String listImages(Model model, @PathVariable String handle) {
-        Account user = accountService.findUserByHandle(handle);
         model.addAttribute("handle", handle);
-        model.addAttribute("images", imageService.getImages(user));
+        model.addAttribute("images", imageService.getImagesByHandle(handle));
         return "images";
     }
 
@@ -50,7 +44,19 @@ public class ImageController {
     @PostMapping("/images")
     public String save(@RequestParam MultipartFile file, @RequestParam String description,
             RedirectAttributes redirectAttributes) throws IOException {
-        accountService.addImage(file.getBytes(), description);
+        if (description.isEmpty()) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Adding image failed: description field is empty!");
+            return "redirect:/home";
+        }
+        if (file.isEmpty()) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Adding image failed: image not found!");
+            return "redirect:/home";
+        }
+        if (imageService.numberOfImages() >= 10) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Adding image failed: maximum of 10 images exceeded!");
+            return "redirect:/home";
+        }
+        imageService.addImage(file.getBytes(), description);
         redirectAttributes.addFlashAttribute("infoMessage", "New image added!");
         return "redirect:/home";
     }
