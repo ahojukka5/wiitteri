@@ -27,9 +27,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         // sallitaan framejen käyttö
         http.headers().frameOptions().sameOrigin();
 
-        http.authorizeRequests().antMatchers("/", "/login", "/register", "profiles/**").permitAll()
+        http.authorizeRequests().antMatchers("/", "/assets/**", "/login", "/register", "profiles/**").permitAll()
                 .antMatchers("/h2-console", "/h2-console/**").permitAll().anyRequest().authenticated().and().formLogin()
-                .permitAll().and().logout().permitAll();
+                .loginPage("/").permitAll().and().logout().logoutSuccessUrl("/").permitAll();
     }
 
     @Autowired
