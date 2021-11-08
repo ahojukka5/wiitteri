@@ -56,9 +56,9 @@ public class AccountService {
         connectionRepository.save(connection);
     }
 
-    public void createAccount(String username, String password, String handle) {
+    public void createAccount(String name, String username, String password, String handle) {
         String passwordHash = passwordEncoder.encode(password);
-        Account user = new Account(username, passwordHash, handle);
+        Account user = new Account(name, username, passwordHash, handle);
         accountRepository.save(user);
     }
 
