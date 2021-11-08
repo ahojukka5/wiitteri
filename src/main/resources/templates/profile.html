@@ -1,16 +1,58 @@
 <!DOCTYPE HTML>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
-<head>
-    <meta charset="UTF-8" />
-    <title>Hello world</title>
-</head>
+<head th:replace="fragments/layout :: head"></head>
 
 <body>
+    <div id="wrap">
+        <div th:replace="fragments/layout :: navbar"></div>
 
-    <h1 th:text="${'User ' + username}">username</h1>
+        <div class="container">
+            <div th:if="${errorMessage != null}">
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <span th:text="${errorMessage}">errorMessage</span>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
+            <div th:if="${infoMessage != null}">
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <span th:text="${infoMessage}">infoMessage</span>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 order-2 order-lg-1">
+                    <h1 th:text="${user.getName() + ' (@' + user.getHandle() + ')'}">handle</h1>
+                    <div th:if="${!isFollowing}">
+                        <a th:href="@{/profiles/{handle}/follow(handle=${handle})}">Follow user</a>
+                    </div>
+                </div>
+            </div>
 
-    <a th:href="@{/{handle}/follow(handle=${username})}">Follow user</a>
+            <section>
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2>Images</h2>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4" th:each="image: ${images}">
+                        <img class="img-responsive imageClip" th:src="@{/images/{id}(id=${image.id})}" />
+                        <p class="muted text-center" th:text="${image.description}"></p>
+                    </div>
+                </div>
+
+            </section>
+
+        </div>
+    </div>
+
+    <div th:replace="fragments/layout :: footer"></div>
 </body>
 
 </html>
