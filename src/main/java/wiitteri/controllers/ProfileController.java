@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import wiitteri.models.Account;
 import wiitteri.services.AccountService;
 
 @Controller
@@ -25,6 +26,14 @@ public class ProfileController {
         return "profiles";
     }
 
+    @GetMapping("/profiles/{handle}")
+    public String profile(Model model, @PathVariable String handle) {
+        Account user = accountService.findUserByHandle(handle);
+        model.addAttribute("handle", handle);
+        model.addAttribute("user", user);
+        logger.debug("isFollowing @" + handle + "? " + accountService.isFollowing(handle));
+        model.addAttribute("isFollowing", accountService.isFollowing(handle));
+        model.addAttribute("images", accountService.getImages(user));
         return "profile";
     }
 
