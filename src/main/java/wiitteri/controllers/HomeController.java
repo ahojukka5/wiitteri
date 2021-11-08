@@ -9,12 +9,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import wiitteri.models.Image;
 import wiitteri.services.AccountService;
+import wiitteri.services.TweetService;
 
 @Controller
 public class HomeController {
 
     @Autowired
     private AccountService accountService;
+
+    @Autowired
+    private TweetService tweetService;
 
     @GetMapping("/home")
     public String home(Model model) {
@@ -26,6 +30,7 @@ public class HomeController {
         model.addAttribute("numberOfImages", images.size());
         model.addAttribute("canUploadImages", images.size() < 10);
         model.addAttribute("user", accountService.getLoggedUser());
+        model.addAttribute("tweets", tweetService.getTweets());
         return "home";
     }
 
