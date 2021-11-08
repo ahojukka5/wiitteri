@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
@@ -18,8 +20,15 @@ import lombok.NoArgsConstructor;
 @Data
 public class Account extends AbstractPersistable<Long> {
 
+    @NotEmpty
+    @Size(min = 2, max = 30)
     private String username;
+
+    @NotEmpty
     private String password;
+
+    @NotEmpty
+    @Size(min = 2, max = 30)
     private String handle;
 
     @OneToMany(mappedBy = "to")
