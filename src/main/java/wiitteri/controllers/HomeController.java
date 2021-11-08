@@ -15,7 +15,7 @@ public class HomeController {
 
     @GetMapping("/home")
     public String home(Model model) {
-        model.addAttribute("username", accountService.getUsername());
+        model.addAttribute("handle", accountService.getHandle());
         model.addAttribute("following", accountService.getFollowing());
         model.addAttribute("followers", accountService.getFollowers());
         return "home";
