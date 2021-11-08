@@ -38,7 +38,6 @@
                             <h2 class="text-center">User information</h2>
                         </div>
                     </div>
-
                     <div class="row">
                         <div class="col-md-6">
                             <div class="profileImage" th:if="${user.hasProfileImage()}">
@@ -54,7 +53,39 @@
                             </div>
                         </div>
                     </div>
+                </section>
 
+                <section>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h2 class="text-center">What happened yesterday?</h2>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <form method="POST" th:action="@{/tweets}">
+                                <label for="content">Wiit a message:</label>
+                                <input type="text" name="content" id="content">
+                                <input type="submit" value="Wiit!" />
+                            </form>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h2 class="text-center">Wall of Wiits</h2>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div th:each="tweet: ${tweets}">
+                                <div>
+                                    "<emph th:text="${tweet.getContent()}"></emph>"
+                                    by <strong th:text="${'@' + tweet.getOwner().getHandle()}"></strong>
+                                    at <span th:text="${'' + tweet.getCreated()}"> </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </section>
 
                 <section>
