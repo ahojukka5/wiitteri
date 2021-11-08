@@ -23,4 +23,8 @@ public class SearchService {
         return accountRepository.findByUsernameContainingIgnoreCase(query);
     }
 
+    public List<Account> searchByName(String query) {
+        return accountRepository.findByNameContainingIgnoreCase(query);
+    }
+
 }
