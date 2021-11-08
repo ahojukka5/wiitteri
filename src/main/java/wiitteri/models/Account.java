@@ -53,4 +53,8 @@ public class Account extends AbstractPersistable<Long> {
         this.followers = new ArrayList<>();
         this.following = new ArrayList<>();
     }
+
+    public boolean hasProfileImage() {
+        return getProfileImage() != null;
+    }
 }
