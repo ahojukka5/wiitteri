@@ -12,8 +12,10 @@ import org.springframework.stereotype.Service;
 
 import wiitteri.models.Account;
 import wiitteri.models.Connection;
+import wiitteri.models.Image;
 import wiitteri.repositories.AccountRepository;
 import wiitteri.repositories.ConnectionRepository;
+import wiitteri.repositories.ImageRepository;
 
 @Service
 public class AccountService {
@@ -28,6 +30,9 @@ public class AccountService {
 
     @Autowired
     private ConnectionRepository connectionRepository;
+
+    @Autowired
+    private ImageRepository imageRepository;
 
     public Account getLoggedUser() {
         String loggedUsername = getUsername();
@@ -113,6 +118,10 @@ public class AccountService {
 
     public Account findUserByHandle(String handle) {
         return accountRepository.findByHandle(handle);
+    }
+
+    public List<Image> getImages(Account user) {
+        return imageRepository.findByOwner(user);
     }
 
 }
