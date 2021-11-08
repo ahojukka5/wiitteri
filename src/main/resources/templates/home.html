@@ -40,6 +40,16 @@
                     </div>
                 </div>
 
+                <div class="row" th:if="${user.hasProfileImage()}">
+                    <div class="col-md-12">
+                        profile picture:
+                        <div class="profileImage">
+                            <img class="img-responsive imageClip"
+                                th:src="@{/images/{id}(id=${user.getProfileImage().id})}" />
+                        </div>
+                    </div>
+                </div>
+
                 <div class="row">
                     <div class="col-md-12 order-2 order-lg-1">
                         <p>You are following:</p>
@@ -97,6 +107,8 @@
                         <div class="col-md-4" th:each="image: ${images}">
                             <a th:href="@{/images/{id}/delete(id=${image.id})}"><span
                                     class="fa fa-minus-circle"></span></a>
+                            <a th:href="@{/images/{id}/use_as_profile_picture(id=${image.id})}"><span
+                                    class="fa fa-user-circle"></span></a>
                             <div class="imageContainer">
                                 <img class="img-responsive imageClip" th:src="@{/images/{id}(id=${image.id})}" />
                             </div>
