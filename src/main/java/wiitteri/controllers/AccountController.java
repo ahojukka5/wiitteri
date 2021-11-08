@@ -1,5 +1,8 @@
 package wiitteri.controllers;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,12 +27,19 @@ public class AccountController {
     }
 
     @PostMapping("/register")
-    public String post(@RequestParam String username, @RequestParam String password, @RequestParam String handle) {
+    public String post(HttpServletRequest request, @RequestParam String name, @RequestParam String username,
+            @RequestParam String password, @RequestParam String handle) {
         if (accountService.hasUser(username)) {
-            return "redirect:/accounts";
+            return "redirect:/register";
         }
-        logger.debug("Registering new user with username " + username + " and handle " + handle);
-        accountService.createAccount(username, password, handle);
+        logger.debug("Registering new user with username " + username + " and handle @" + handle);
+        accountService.createAccount(name, username, password, handle);
+        try {
+            request.login(username, password);
+        } catch (ServletException e) {
+            logger.error("Failed to login user " + username);
+            return "redirect:/";
+        }
         return "redirect:/home";
     }
 }
