@@ -95,4 +95,8 @@ public class AccountService {
         return getLoggedUser().getHandle();
     }
 
+    public Account findUserByHandle(String handle) {
+        return accountRepository.findByHandle(handle);
+    }
+
 }
