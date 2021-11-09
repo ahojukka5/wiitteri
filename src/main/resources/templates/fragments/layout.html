@@ -26,8 +26,11 @@
                         aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
-                    <a th:href="@{/}" class="navbar-brand text-white">Wiitteri</a>
-                    <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+                    <a th:href="@{/}" class="navbar-brand text-white">
+                        <img th:src="@{/assets/nok_small.png}" alt="" width="30" height="24"
+                            class="d-inline-block align-text-top">
+                        Wiitteri</a>
+                    <div class="collapse navbar-collapse">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                             <li class="nav-item">
                                 <a th:href="@{/home}" class="btn btn-primary text-white">Home</a>
