@@ -1,6 +1,8 @@
 package wiitteri.controllers;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -8,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -46,6 +49,14 @@ public class ImageController {
         imageService.useAsProfilePicture(id);
         redirectAttributes.addFlashAttribute("infoMessage", "Profile picture changed!");
         return "redirect:/home";
+    }
+
+    @GetMapping(path = "/images/{id}/like")
+    public String like(@PathVariable Long id, RedirectAttributes redirectAttributes,
+            @RequestHeader(value = "Referer", required = false) final String referer) throws MalformedURLException {
+        imageService.like(id);
+        redirectAttributes.addFlashAttribute("infoMessage", "Liked image!");
+        return "redirect:" + new URL(referer).getPath();
     }
 
     @PostMapping("/images")
