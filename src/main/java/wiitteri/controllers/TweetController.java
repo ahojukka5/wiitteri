@@ -36,4 +36,12 @@ public class TweetController {
         redirectAttributes.addFlashAttribute("infoMessage", "Liked tweet!");
         return "redirect:" + new URL(referer).getPath();
     }
+
+    @PostMapping(path = "/tweets/{id}/add_comment")
+    public String addComment(@PathVariable Long id, @RequestParam String content, RedirectAttributes redirectAttributes,
+            @RequestHeader(value = "Referer", required = false) final String referer) throws MalformedURLException {
+        tweetService.addComment(id, content);
+        redirectAttributes.addFlashAttribute("infoMessage", "Tweet commented!");
+        return "redirect:" + new URL(referer).getPath();
+    }
 }
