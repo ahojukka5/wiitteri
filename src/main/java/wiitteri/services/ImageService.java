@@ -1,13 +1,14 @@
 package wiitteri.services;
 
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import wiitteri.models.Account;
 import wiitteri.models.Image;
+import wiitteri.models.Tweet;
+import wiitteri.models.TweetKind;
 import wiitteri.repositories.ImageRepository;
 
 @Service
@@ -18,6 +19,9 @@ public class ImageService {
 
     @Autowired
     AccountService accountService;
+
+    @Autowired
+    TweetService tweetService;
 
     public List<Image> getImages(Account user) {
         return imageRepository.findByOwner(user);
@@ -67,4 +71,12 @@ public class ImageService {
         image.getLikes().add(user);
         imageRepository.save(image);
     }
+
+    public void addComment(Long id, String content) {
+        Image image = getImage(id);
+        Tweet comment = tweetService.createTweet(TweetKind.COMMENT, content);
+        image.getComments().add(comment);
+        imageRepository.save(image);
+    }
+
 }
