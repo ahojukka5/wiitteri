@@ -162,6 +162,27 @@
                                 <span th:text="${image.getDescription()}"></span>
                                 (<span th:text="${image.getNumberOfLikes()}"></span> likes)
                             </p>
+
+                            <div class="muted text-center">
+                                <h5>Comments</h5>
+                            </div>
+                            <div th:each="comment: ${image.getComments()}">
+                                <div>
+                                    "<emph th:text="${comment.getContent()}"></emph>"
+                                    by <strong th:text="${'@' + comment.getOwner().getHandle()}"></strong>
+                                    at <span th:text="${'' + comment.getCreated()}"> </span>
+                                    (<span th:text="${comment.getNumberOfLikes()}"></span> likes <a
+                                        th:href="@{/tweets/{id}/like(id=${comment.id})}"><span
+                                            class="fa fa-thumbs-up"></span></a>)
+                                </div>
+                            </div>
+                            <div>
+                                <form method="POST" th:action="@{/images/{id}/add_comment(id=${image.id})}">
+                                    <input type="submit" value="Comment:" />
+                                    <input type="text" name="content" id="content">
+                                </form>
+                            </div>
+
                         </div>
                     </div>
 
