@@ -30,6 +30,10 @@ public class TweetService {
         return tweet;
     }
 
+    public Tweet getTweet(Long id) {
+        return tweetRepository.getOne(id);
+    }
+
     public List<Tweet> getWallTweetsByTweeterIds(List<Long> tweeterIds, Pageable p) {
         logger.debug("fetching all wall tweets ...");
         return tweetRepository.findByOwnerIdInAndKind(tweeterIds, TweetKind.WALL, p);
@@ -37,13 +41,20 @@ public class TweetService {
 
     public void like(Long id) {
         Account user = accountService.getLoggedUser();
-        Tweet tweet = tweetRepository.getOne(id);
+        Tweet tweet = getTweet(id);
         tweet.getLikes().add(user);
         tweetRepository.save(tweet);
     }
 
     public List<Tweet> getTweets(Account user) {
         return tweetRepository.findByOwnerAndKind(user, TweetKind.WALL);
+    }
+
+    public void addComment(Long id, String content) {
+        Tweet tweet = getTweet(id);
+        Tweet comment = createTweet(TweetKind.COMMENT, content);
+        tweet.getComments().add(comment);
+        tweetRepository.save(tweet);
     }
 
 }
