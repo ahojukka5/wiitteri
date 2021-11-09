@@ -5,7 +5,9 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import wiitteri.models.Account;
@@ -47,7 +49,8 @@ public class TweetService {
     }
 
     public List<Tweet> getTweets(Account user) {
-        return tweetRepository.findByOwnerAndKind(user, TweetKind.WALL);
+        Pageable p = PageRequest.of(0, 25, Sort.by("created").descending());
+        return tweetRepository.findByOwnerAndKind(user, TweetKind.WALL, p);
     }
 
     public void addComment(Long id, String content) {

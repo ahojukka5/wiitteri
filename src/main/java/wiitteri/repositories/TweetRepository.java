@@ -11,10 +11,8 @@ import wiitteri.models.TweetKind;
 
 public interface TweetRepository extends JpaRepository<Tweet, Long> {
 
-    List<Tweet> findByOwnerIdIn(List<Long> tweeterIds);
-
     List<Tweet> findByOwnerIdInAndKind(List<Long> tweeterIds, TweetKind kind, Pageable p);
 
-    List<Tweet> findByOwnerAndKind(Account user, TweetKind wall);
+    List<Tweet> findByOwnerAndKind(Account user, TweetKind wall, Pageable p);
 
 }
