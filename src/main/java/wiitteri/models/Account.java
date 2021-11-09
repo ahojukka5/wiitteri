@@ -60,4 +60,21 @@ public class Account extends AbstractPersistable<Long> {
     public boolean hasProfileImage() {
         return getProfileImage() != null;
     }
+
+    @Override
+    public boolean equals(Object other) {
+        if (this == other)
+            return true;
+        if (other == null || getClass() != other.getClass())
+            return false;
+        if (!super.equals(other))
+            return false;
+        Account account = (Account) other;
+        return username.equals(account.username);
+    }
+
+    @Override
+    public int hashCode() {
+        return username.hashCode();
+    }
 }
