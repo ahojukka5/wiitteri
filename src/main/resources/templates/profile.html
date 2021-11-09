@@ -36,7 +36,29 @@
             <section>
                 <div class="row">
                     <div class="col-md-12">
-                        <h2>Images</h2>
+                        <h2 class="text-center">Wall of Wiits</h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div th:each="tweet: ${tweets}">
+                            <div>
+                                "<emph th:text="${tweet.getContent()}"></emph>"
+                                by <strong th:text="${'@' + tweet.getOwner().getHandle()}"></strong>
+                                at <span th:text="${'' + tweet.getCreated()}"> </span>
+                                (<span th:text="${tweet.getNumberOfLikes()}"></span> likes <a
+                                    th:href="@{/tweets/{id}/like(id=${tweet.id})}"><span
+                                        class="fa fa-thumbs-up"></span></a>)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2 class="text-center">Images</h2>
                     </div>
                 </div>
 

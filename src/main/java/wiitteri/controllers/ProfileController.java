@@ -11,6 +11,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import wiitteri.models.Account;
 import wiitteri.services.AccountService;
+import wiitteri.services.TweetService;
 
 @Controller
 public class ProfileController {
@@ -19,6 +20,9 @@ public class ProfileController {
 
     @Autowired
     AccountService accountService;
+
+    @Autowired
+    TweetService tweetService;
 
     @GetMapping("/profiles")
     public String profiles(Model model) {
@@ -34,6 +38,7 @@ public class ProfileController {
         logger.debug("isFollowing @" + handle + "? " + accountService.isFollowing(handle));
         model.addAttribute("isFollowing", accountService.isFollowing(handle));
         model.addAttribute("images", accountService.getImages(user));
+        model.addAttribute("tweets", tweetService.getTweets(user));
         return "profile";
     }
 
