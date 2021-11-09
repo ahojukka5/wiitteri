@@ -3,6 +3,7 @@ package wiitteri.models;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -27,6 +28,7 @@ public class Account extends AbstractPersistable<Long> {
 
     @NotEmpty
     @Size(min = 2, max = 30)
+    @Column(unique = true)
     private String username;
 
     @NotEmpty
@@ -34,6 +36,7 @@ public class Account extends AbstractPersistable<Long> {
 
     @NotEmpty
     @Size(min = 2, max = 30)
+    @Column(unique = true)
     private String handle;
 
     @OneToMany(mappedBy = "to")
