@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import wiitteri.models.TweetKind;
 import wiitteri.services.TweetService;
 
 @Controller
@@ -23,7 +24,7 @@ public class TweetController {
     @PostMapping("/tweets")
     public String newTweet(@RequestParam String content) {
         if (!content.isEmpty()) {
-            tweetService.createTweet(content);
+            tweetService.createTweet(TweetKind.WALL, content);
         }
         return "redirect:/home";
     }
@@ -32,7 +33,7 @@ public class TweetController {
     public String like(@PathVariable Long id, RedirectAttributes redirectAttributes,
             @RequestHeader(value = "Referer", required = false) final String referer) throws MalformedURLException {
         tweetService.like(id);
-        redirectAttributes.addFlashAttribute("infoMessage", "Liked image!");
+        redirectAttributes.addFlashAttribute("infoMessage", "Liked tweet!");
         return "redirect:" + new URL(referer).getPath();
     }
 }

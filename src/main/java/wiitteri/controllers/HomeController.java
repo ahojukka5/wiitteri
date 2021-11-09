@@ -46,7 +46,7 @@ public class HomeController {
             tweeterIds.add(f.getTo().getId());
         }
         Pageable p = PageRequest.of(0, 25, Sort.by("created").descending());
-        model.addAttribute("tweets", tweetService.getTweetsByTweeterIds(tweeterIds, p));
+        model.addAttribute("tweets", tweetService.getWallTweetsByTweeterIds(tweeterIds, p));
         return "home";
     }
 
