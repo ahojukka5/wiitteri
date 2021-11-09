@@ -1,6 +1,7 @@
 package wiitteri.services;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,7 +32,7 @@ public class ImageService {
     }
 
     public void deleteImage(Long id) {
-        Image image = imageRepository.getOne(id);
+        Image image = getImage(id);
         imageRepository.delete(image);
     }
 
@@ -58,5 +59,12 @@ public class ImageService {
     public void useAsProfilePicture(Long id) {
         Image profileImage = getImage(id);
         accountService.updateProfileImage(profileImage);
+    }
+
+    public void like(Long id) {
+        Account user = accountService.getLoggedUser();
+        Image image = getImage(id);
+        image.getLikes().add(user);
+        imageRepository.save(image);
     }
 }
