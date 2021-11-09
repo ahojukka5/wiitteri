@@ -59,6 +59,14 @@ public class ImageController {
         return "redirect:" + new URL(referer).getPath();
     }
 
+    @PostMapping(path = "/images/{id}/add_comment")
+    public String addComment(@PathVariable Long id, @RequestParam String content, RedirectAttributes redirectAttributes,
+            @RequestHeader(value = "Referer", required = false) final String referer) throws MalformedURLException {
+        imageService.addComment(id, content);
+        redirectAttributes.addFlashAttribute("infoMessage", "Image commented!");
+        return "redirect:" + new URL(referer).getPath();
+    }
+
     @PostMapping("/images")
     public String save(@RequestParam MultipartFile file, @RequestParam String description,
             RedirectAttributes redirectAttributes) throws IOException {
