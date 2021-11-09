@@ -1,6 +1,8 @@
 package wiitteri.models;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Basic;
@@ -9,6 +11,7 @@ import javax.persistence.FetchType;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotEmpty;
 
 import org.springframework.data.jpa.domain.AbstractPersistable;
@@ -33,6 +36,9 @@ public class Image extends AbstractPersistable<Long> {
     @ManyToMany
     private Set<Account> likes;
 
+    @OneToMany
+    private List<Tweet> comments;
+
     @Lob
     @Basic(fetch = FetchType.LAZY)
     private byte[] content;
@@ -41,6 +47,7 @@ public class Image extends AbstractPersistable<Long> {
         this.description = description;
         this.owner = owner;
         this.likes = new HashSet<>();
+        this.comments = new ArrayList<>();
         this.content = content;
     }
 
