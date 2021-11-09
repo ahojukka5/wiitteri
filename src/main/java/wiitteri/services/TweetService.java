@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import wiitteri.models.Account;
 import wiitteri.models.Tweet;
 import wiitteri.repositories.TweetRepository;
 
@@ -29,6 +30,13 @@ public class TweetService {
 
     public List<Tweet> getTweetsByTweeterIds(List<Long> tweeterIds, Pageable p) {
         return tweetRepository.findByOwnerIdIn(tweeterIds, p);
+    }
+
+    public void like(Long id) {
+        Account user = accountService.getLoggedUser();
+        Tweet tweet = tweetRepository.getOne(id);
+        tweet.getLikes().add(user);
+        tweetRepository.save(tweet);
     }
 
 }
