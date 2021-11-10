@@ -37,6 +37,9 @@ public class ImageService {
 
     public void deleteImage(Long id) {
         Image image = getImage(id);
+        if (image.equals(accountService.getProfileImage())) {
+            accountService.setProfileImage(null);
+        }
         imageRepository.delete(image);
     }
 

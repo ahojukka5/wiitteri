@@ -139,4 +139,14 @@ public class AccountService {
         accountRepository.save(user);
     }
 
+    public Image getProfileImage() {
+        return getLoggedUser().getProfileImage();
+    }
+
+    public void setProfileImage(Image image) {
+        Account user = getLoggedUser();
+        user.setProfileImage(image);
+        accountRepository.save(user);
+    }
+
 }
