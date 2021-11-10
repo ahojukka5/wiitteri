@@ -61,10 +61,10 @@ public class AccountService {
         connectionRepository.save(connection);
     }
 
-    public void createAccount(String name, String username, String password, String handle) {
+    public Account createAccount(String name, String username, String password, String handle) {
         String passwordHash = passwordEncoder.encode(password);
         Account user = new Account(name, username, passwordHash, handle);
-        accountRepository.save(user);
+        return accountRepository.save(user);
     }
 
     public List<Connection> getFollowing() {
@@ -143,10 +143,13 @@ public class AccountService {
         return getLoggedUser().getProfileImage();
     }
 
-    public void setProfileImage(Image image) {
-        Account user = getLoggedUser();
+    public Account setProfileImage(Account user, Image image) {
         user.setProfileImage(image);
-        accountRepository.save(user);
+        return accountRepository.save(user);
+    }
+
+    public Account setProfileImage(Image image) {
+        return setProfileImage(getLoggedUser(), image);
     }
 
 }
