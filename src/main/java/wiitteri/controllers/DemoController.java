@@ -4,6 +4,8 @@ import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.hibernate.boot.Metadata;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -50,4 +52,11 @@ public class DemoController {
         schemaExport.createOnly(EnumSet.of(TargetType.SCRIPT), metadata);
         return "Schema exported to create.sql";
     }
+
+    @GetMapping("/demo/reset")
+    public String reset(HttpSession session) {
+        session.invalidate();
+        return "redirect:/";
+    }
+
 }

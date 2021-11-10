@@ -14,9 +14,7 @@
                     <div class="col-md-12">
                         <div class="alert alert-warning alert-dismissible fade show" role="alert">
                             <span th:text="${errorMessage}">errorMessage</span>
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     </div>
                 </div>
@@ -25,9 +23,7 @@
                     <div class="col-md-12">
                         <div class="alert alert-success alert-dismissible fade show" role="alert">
                             <span th:text="${infoMessage}">infoMessage</span>
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     </div>
                 </div>
@@ -170,13 +166,13 @@
 
                     <div class="row">
                         <div class="col-md-4" th:each="image: ${images}">
-                            <a th:href="@{/images/{id}/delete(id=${image.id})}"><span
-                                    class="fa fa-minus-circle"></span></a>
-                            <a th:href="@{/images/{id}/use_as_profile_picture(id=${image.id})}"><span
-                                    class="fa fa-user-circle"></span></a>
-                            <a th:href="@{/images/{id}/like(id=${image.id})}"><span class="fa fa-heart"></span></a>
-                            <div class="imageContainer">
-                                <img class="img-responsive imageClip" th:src="@{/images/{id}(id=${image.id})}" />
+                            <img class="img-responsive imageClip" th:src="@{/images/{id}(id=${image.id})}" />
+                            <div class="imageButtons">
+                                <a class="btn btn-primary" th:href="@{/images/{id}/delete(id=${image.id})}">Delete</a>
+                                <a class="btn btn-primary"
+                                    th:href="@{/images/{id}/use_as_profile_picture(id=${image.id})}">Use as profile
+                                    picture</a>
+                                <a class="btn btn-primary" th:href="@{/images/{id}/like(id=${image.id})}">Like it!</a>
                             </div>
                             <p class="muted text-center">
                                 <span th:text="${image.getDescription()}"></span>

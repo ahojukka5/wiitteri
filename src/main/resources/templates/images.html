@@ -1,27 +1,106 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
-<head lang="en">
-    <meta charset="UTF-8" />
-    <title>Wiitteri</title>
-</head>
+<head th:replace="fragments/layout :: head"></head>
 
 <body>
 
-    <h2>Images of user <span th:text="${username}"></span></h2>
+    <div id="wrap">
+        <div th:replace="fragments/layout :: navbar"></div>
 
-    <div th:each="image: ${images}">
-        <div th:text="${image.description}"></div>
-        <div th:text="${image.id}"></div>
-        <img th:src="@{/images/{id}(id=${image.id})}" />
+        <section>
+            <div class="container">
+                <div class="row" th:if="${errorMessage != null}">
+                    <div class="col-md-12">
+                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                            <span th:text="${errorMessage}">errorMessage</span>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" th:if="${infoMessage != null}">
+                    <div class="col-md-12">
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <span th:text="${infoMessage}">infoMessage</span>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+                </div>
+
+                <section>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h2 class="text-center">Image gallery (<span th:text="${numberOfImages}">0</span>/10 images)
+                            </h2>
+                        </div>
+                    </div>
+
+                    <div class="row" th:if="${canUploadImages}">
+                        <div class="col-md-12">
+                            <p>Add new image</p>
+                            <form method="POST" th:action="@{/images}" enctype="multipart/form-data">
+                                <input type="file" name="file" id="file" />
+                                <label for="description">Description:</label>
+                                <input type="text" name="description" id="description">
+                                <input type="submit" value="Add!" />
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4" th:each="image: ${images}">
+                            <img class="img-responsive imageClip" th:src="@{/images/{id}(id=${image.id})}" />
+                            <div class="imageButtons">
+                                <a class="btn btn-primary" th:href="@{/images/{id}/delete(id=${image.id})}">Delete</a>
+                                <a class="btn btn-primary"
+                                    th:href="@{/images/{id}/use_as_profile_picture(id=${image.id})}">Use as profile
+                                    picture</a>
+                                <a class="btn btn-primary" th:href="@{/images/{id}/like(id=${image.id})}">Like it!</a>
+                            </div>
+                            <p class="muted text-center">
+                                <span th:text="${image.getDescription()}"></span>
+                                (<span th:text="${image.getNumberOfLikes()}"></span> likes)
+                            </p>
+
+                            <div class="muted text-center">
+                                <h5>Comments</h5>
+                            </div>
+                            <div th:each="comment: ${image.getComments()}">
+                                <div>
+                                    "<emph th:text="${comment.getContent()}"></emph>"
+                                    by <strong th:text="${'@' + comment.getOwner().getHandle()}"></strong>
+                                    at <span th:text="${'' + comment.getCreated()}"> </span>
+                                    (<span th:text="${comment.getNumberOfLikes()}"></span> likes <a
+                                        th:href="@{/tweets/{id}/like(id=${comment.id})}"><span
+                                            class="fa fa-thumbs-up"></span></a>)
+                                </div>
+                            </div>
+                            <div>
+                                <form method="POST" th:action="@{/images/{id}/add_comment(id=${image.id})}">
+                                    <input type="submit" value="Comment:" />
+                                    <input type="text" name="content" id="content">
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="row" th:if="${!canUploadImages}">
+                        <div class="col-md-12">
+                            <p>To upload more images, delete some old ones first</p>
+                        </div>
+                    </div>
+
+                </section>
+
+            </div>
+        </section>
+        <div id="push"></div>
     </div>
 
-    <form method="POST" th:action="@{/{handle}/images(handle=${username})}" enctype="multipart/form-data">
-        <input type="file" name="file" id="file" />
-        <label for="description">Description:</label>
-        <input type="text" name="description" id="description">
-        <input type="submit" value="Add!" />
-    </form>
+    <div th:replace="fragments/layout :: footer"></div>
+
 </body>
 
 </html>
