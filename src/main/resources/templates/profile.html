@@ -38,6 +38,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div th:each="tweet: ${tweets}">
+                            <hr />
                             <div>
                                 "<emph th:text="${tweet.getContent()}"></emph>"
                                 by <strong th:text="${'@' + tweet.getOwner().getHandle()}"></strong>
@@ -68,6 +69,7 @@
                             </div>
 
                         </div>
+                        <hr />
                     </div>
                 </div>
             </section>
