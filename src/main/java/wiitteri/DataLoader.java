@@ -9,6 +9,7 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
+import org.springframework.util.FileCopyUtils;
 
 import wiitteri.models.Account;
 import wiitteri.models.Connection;
@@ -41,7 +42,7 @@ public class DataLoader implements ApplicationRunner {
     private Image addImage(Account account, String filename, String description) throws IOException {
         Resource resource = new ClassPathResource(filename);
         InputStream inputStream = resource.getInputStream();
-        byte[] image = inputStream.readAllBytes();
+        byte[] image = FileCopyUtils.copyToByteArray(inputStream);
         return imageService.addImage(account, image, description);
     }
 
