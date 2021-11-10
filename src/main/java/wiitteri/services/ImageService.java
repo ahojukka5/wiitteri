@@ -55,8 +55,9 @@ public class ImageService {
         return getImages(accountService.findUserByHandle(handle));
     }
 
-    public void addImage(Account user, byte[] bytes, String description) {
-        accountService.addImage(bytes, description);
+    public Image addImage(Account user, byte[] bytes, String description) {
+        Image image = new Image(description, user, bytes);
+        return imageRepository.save(image);
     }
 
     public void addImage(byte[] bytes, String description) {
@@ -68,11 +69,10 @@ public class ImageService {
         accountService.updateProfileImage(profileImage);
     }
 
-    public void like(Long id) {
+    public Image like(Long id) {
         Account user = accountService.getLoggedUser();
         Image image = getImage(id);
-        image.getLikes().add(user);
-        imageRepository.save(image);
+        return addLike(image, user);
     }
 
     public void addComment(Long id, String content) {
@@ -80,6 +80,11 @@ public class ImageService {
         Tweet comment = tweetService.createTweet(TweetKind.COMMENT, content);
         image.getComments().add(comment);
         imageRepository.save(image);
+    }
+
+    public Image addLike(Image image, Account user) {
+        image.getLikes().add(user);
+        return imageRepository.save(image);
     }
 
 }
