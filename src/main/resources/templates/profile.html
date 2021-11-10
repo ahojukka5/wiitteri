@@ -84,10 +84,10 @@
                 <div class="row">
                     <div class="col-md-4" th:each="image: ${images}">
                         <img class="img-responsive imageClip" th:src="@{/images/{id}(id=${image.id})}" />
-                        <a th:href="@{/images/{id}/like(id=${image.id})}"><span class="fa fa-heart"></span></a>
                         <p class="muted text-center">
                             <span th:text="${image.getDescription()}"></span>
-                            (<span th:text="${image.getNumberOfLikes()}"></span> likes)
+                            (<span th:text="${image.getNumberOfLikes()}"></span> likes,
+                            <a th:href="@{/images/{id}/like(id=${image.id})}"><span class="fa fa-thumbs-up"></span></a>)
                         </p>
                         <div class="muted text-center">
                             <h5>Comments</h5>
@@ -97,8 +97,8 @@
                                 "<emph th:text="${comment.getContent()}"></emph>"
                                 by <strong th:text="${'@' + comment.getOwner().getHandle()}"></strong>
                                 at <span th:text="${'' + comment.getCreated()}"> </span>
-                                (<span th:text="${comment.getNumberOfLikes()}"></span> likes <a
-                                    th:href="@{/tweets/{id}/like(id=${comment.id})}"><span
+                                (<span th:text="${comment.getNumberOfLikes()}"></span> likes
+                                <a th:href="@{/tweets/{id}/like(id=${comment.id})}"><span
                                         class="fa fa-thumbs-up"></span></a>)
                             </div>
                         </div>
