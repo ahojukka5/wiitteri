@@ -28,8 +28,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.headers().frameOptions().sameOrigin();
 
         http.authorizeRequests().antMatchers("/", "/assets/**", "/login", "/register", "profiles/**").permitAll()
-                .antMatchers("/h2-console", "/h2-console/**").permitAll().anyRequest().authenticated().and().formLogin()
-                .loginPage("/").permitAll().and().logout().logoutSuccessUrl("/").permitAll();
+                .antMatchers("/h2-console", "/h2-console/**", "/demo/**").permitAll().anyRequest().authenticated().and()
+                .formLogin().loginPage("/").permitAll().and().logout().logoutSuccessUrl("/").permitAll();
     }
 
     @Autowired
