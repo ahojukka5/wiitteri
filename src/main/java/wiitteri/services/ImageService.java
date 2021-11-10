@@ -87,4 +87,10 @@ public class ImageService {
         return imageRepository.save(image);
     }
 
+    public Image addComment(Image image, Account account, String content) {
+        Tweet comment = tweetService.createComment(account, content);
+        image.getComments().add(comment);
+        return imageRepository.save(image);
+    }
+
 }

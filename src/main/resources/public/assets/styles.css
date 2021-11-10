@@ -40,10 +40,14 @@ body {
 }
 
 /* Set the fixed height of the footer here */
-#push,
+#push {
+  height: 80px;
+}
+
 #footer {
   height: 60px;
 }
+
 #footer {
   background-color: #f5f5f5;
 }

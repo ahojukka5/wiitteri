@@ -1,6 +1,7 @@
 package wiitteri.services;
 
 import java.util.List;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -72,7 +73,7 @@ public class TweetService {
         return tweetRepository.save(tweet);
     }
 
-    private Tweet createComment(Account account, String content) {
+    public Tweet createComment(Account account, String content) {
         Tweet comment = new Tweet(TweetKind.COMMENT, account, content);
         return tweetRepository.save(comment);
     }
