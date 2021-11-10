@@ -14,8 +14,6 @@ import wiitteri.models.Account;
 import wiitteri.models.Connection;
 import wiitteri.models.Image;
 import wiitteri.repositories.AccountRepository;
-import wiitteri.repositories.ConnectionRepository;
-import wiitteri.repositories.ImageRepository;
 
 @Service
 public class AccountService {
@@ -29,10 +27,10 @@ public class AccountService {
     private AccountRepository accountRepository;
 
     @Autowired
-    private ConnectionRepository connectionRepository;
+    private ConnectionService connectionService;
 
     @Autowired
-    private ImageRepository imageRepository;
+    private ImageService imageService;
 
     public Account getLoggedUser() {
         String loggedUsername = getUsername();
@@ -57,8 +55,7 @@ public class AccountService {
         Account loggedUser = getLoggedUser();
         Account otherUser = accountRepository.findByHandle(handle);
         logger.debug(loggedUser.getUsername() + " is following " + otherUser.getUsername());
-        Connection connection = new Connection(loggedUser, otherUser);
-        connectionRepository.save(connection);
+        connectionService.connect(loggedUser, otherUser);
     }
 
     public Account createAccount(String name, String username, String password, String handle) {
@@ -78,14 +75,7 @@ public class AccountService {
     public void block(String handle) {
         Account loggedUser = getLoggedUser();
         Account otherUser = accountRepository.findByHandle(handle);
-        Connection connection = connectionRepository.findByFromAndTo(otherUser, loggedUser);
-        if (connection == null) {
-            String me = loggedUser.getHandle();
-            logger.error("Connection between @" + handle + " and @" + me + " not found!");
-            return;
-        }
-        connection.setActive(false);
-        connectionRepository.save(connection);
+        connectionService.block(loggedUser, otherUser);
     }
 
     public boolean hasUser(String username) {
@@ -103,17 +93,7 @@ public class AccountService {
     public boolean isFollowing(String handle) {
         Account loggedUser = getLoggedUser();
         Account otherUser = accountRepository.findByHandle(handle);
-        logger.debug("Checking is " + loggedUser.getHandle() + " following " + otherUser.getHandle() + " ...");
-        if (loggedUser == otherUser) {
-            return true;
-        }
-        Connection connection = connectionRepository.findByFromAndTo(loggedUser, otherUser);
-        if (connection != null) {
-            logger.debug("Yes, following since " + connection.getCreated());
-        } else {
-            logger.debug("Connection not found");
-        }
-        return connection != null;
+        return connectionService.hasConnection(loggedUser, otherUser);
     }
 
     public Account findUserByHandle(String handle) {
@@ -121,16 +101,15 @@ public class AccountService {
     }
 
     public List<Image> getImages(Account user) {
-        return imageRepository.findByOwner(user);
+        return imageService.findByOwner(user);
     }
 
     public List<Image> getImages() {
         return getImages(getLoggedUser());
     }
 
-    public void addImage(byte[] bytes, String description) {
-        Image image = new Image(description, getLoggedUser(), bytes);
-        imageRepository.save(image);
+    public Image addImage(byte[] bytes, String description) {
+        return imageService.addImage(getLoggedUser(), description, bytes);
     }
 
     public void updateProfileImage(Image profileImage) {

@@ -93,4 +93,13 @@ public class ImageService {
         return imageRepository.save(image);
     }
 
+    public List<Image> findByOwner(Account user) {
+        return imageRepository.findByOwner(user);
+    }
+
+    public Image addImage(Account user, String description, byte[] content) {
+        Image image = new Image(description, user, content);
+        return imageRepository.save(image);
+    }
+
 }

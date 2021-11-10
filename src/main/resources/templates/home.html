@@ -121,7 +121,7 @@
                             <ul>
                                 <li th:each="f: ${followers}">
                                     <a th:href="@{/profiles/{handle}(handle=${f.getFrom().getHandle()})}">
-                                        <span th:text="${'@' + f.getFrom().getHandle()}">handle</span>
+                                        <span th:text="${f.getFrom().getName()}">handle</span>
                                     </a>
                                     since
                                     <span th:text="${f.getCreated()}">created</span>
@@ -135,10 +135,8 @@
                             <p>You are following:</p>
                             <ul>
                                 <li th:each="f: ${following}">
-                                    <a th:href="@{/profiles/{handle}(handle=${f.getTo().getHandle()})}">
-                                        <span th:text="${'@' + f.getTo().getHandle()}">handle</span>
-                                    </a>
-                                    since
+                                    <a th:href="@{/profiles/{handle}(handle=${f.getTo().getHandle()})}"><span
+                                            th:text="${f.getTo().getName()}">handle</span></a> since
                                     <span th:text="${f.getCreated()}">created</span>
                                 </li>
                             </ul>

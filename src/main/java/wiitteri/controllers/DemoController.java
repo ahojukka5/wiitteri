@@ -55,6 +55,8 @@ public class DemoController {
 
     @GetMapping("/demo/reset")
     public String reset(HttpSession session) {
+        // For some reason, it turns out to be untrivial to just wipe out all
+        // data from database..
         session.invalidate();
         return "redirect:/";
     }
