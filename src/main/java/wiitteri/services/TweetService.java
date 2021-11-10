@@ -28,8 +28,12 @@ public class TweetService {
 
     public Tweet createTweet(TweetKind kind, String content) {
         Tweet tweet = new Tweet(kind, accountService.getLoggedUser(), content);
-        tweetRepository.save(tweet);
-        return tweet;
+        return tweetRepository.save(tweet);
+    }
+
+    public Tweet createTweet(Account user, String content) {
+        Tweet tweet = new Tweet(TweetKind.WALL, user, content);
+        return tweetRepository.save(tweet);
     }
 
     public Tweet getTweet(Long id) {
@@ -41,11 +45,10 @@ public class TweetService {
         return tweetRepository.findByOwnerIdInAndKind(tweeterIds, TweetKind.WALL, p);
     }
 
-    public void like(Long id) {
+    public Tweet like(Long id) {
         Account user = accountService.getLoggedUser();
         Tweet tweet = getTweet(id);
-        tweet.getLikes().add(user);
-        tweetRepository.save(tweet);
+        return addLike(tweet, user);
     }
 
     public List<Tweet> getTweets(Account user) {
@@ -53,11 +56,25 @@ public class TweetService {
         return tweetRepository.findByOwnerAndKind(user, TweetKind.WALL, p);
     }
 
-    public void addComment(Long id, String content) {
+    public Tweet addComment(Long id, String content) {
         Tweet tweet = getTweet(id);
-        Tweet comment = createTweet(TweetKind.COMMENT, content);
+        return addComment(tweet, accountService.getLoggedUser(), content);
+    }
+
+    public Tweet addLike(Tweet tweet, Account user) {
+        tweet.getLikes().add(user);
+        return tweetRepository.save(tweet);
+    }
+
+    public Tweet addComment(Tweet tweet, Account account, String content) {
+        Tweet comment = createComment(account, content);
         tweet.getComments().add(comment);
-        tweetRepository.save(tweet);
+        return tweetRepository.save(tweet);
+    }
+
+    private Tweet createComment(Account account, String content) {
+        Tweet comment = new Tweet(TweetKind.COMMENT, account, content);
+        return tweetRepository.save(comment);
     }
 
 }
