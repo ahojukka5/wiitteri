@@ -3,6 +3,7 @@ package wiitteri.controllers;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import wiitteri.models.Image;
+import wiitteri.services.AccountService;
 import wiitteri.services.ImageService;
 
 @Controller
@@ -24,10 +27,16 @@ public class ImageController {
     @Autowired
     ImageService imageService;
 
+    @Autowired
+    AccountService accountService;
+
     @GetMapping("/{handle}/images")
     public String listImages(Model model, @PathVariable String handle) {
-        model.addAttribute("handle", handle);
-        model.addAttribute("images", imageService.getImagesByHandle(handle));
+        List<Image> images = accountService.getImages();
+        model.addAttribute("images", images);
+        model.addAttribute("numberOfImages", images.size());
+        model.addAttribute("canUploadImages", images.size() < 10);
+        model.addAttribute("user", accountService.getLoggedUser());
         return "images";
     }
 
