@@ -2,7 +2,6 @@ package wiitteri;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
@@ -16,7 +15,7 @@ import wiitteri.models.Account;
 import wiitteri.models.Connection;
 import wiitteri.models.Image;
 import wiitteri.models.Tweet;
-import wiitteri.repositories.TweetRepository;
+
 import wiitteri.services.AccountService;
 import wiitteri.services.ConnectionService;
 import wiitteri.services.ImageService;
@@ -40,9 +39,6 @@ public class DataLoader implements ApplicationRunner {
 
     @Autowired
     private TweetService tweetService;
-
-    @Autowired
-    TweetRepository tweetRepository;
 
     private Image addImage(Account account, String filename, String description) throws IOException {
         Resource resource = new ClassPathResource(filename);
